@@ -6,25 +6,39 @@
 //
 
 import UIKit
+import Kingfisher
+import SnapKit
 
 class MainViewController: BaseViewController {
     
-    private let imageView = UIImageView()
+    private let imageView1 = UIImageView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .red
+        view.addSubview(imageView1)
+        imageView1.snp.makeConstraints { make in
+            make.centerX.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(16)
+            make.width.equalTo(400)
+            make.height.equalTo(200)
+        }
         
-        let id: Int? = 524901
+        let query: Query? = "Clouds"
         
-        guard let id else { return }
+        guard let query else { return }
         
-        NetworkManager.shared.openWeather(.forecast(id), ForecastResponse.self) { data in
-            dump(data)
+        NetworkManager.shared.request(PhotoRequest.search(query), PhotoResponse.self) { [weak self] data in
+            let small = URL(string: data.results[0].urls.small)
+            
+            DispatchQueue.main.async {
+                self?.imageView1.kf.setImage(with: small)
+            }
         } failureHandler: {
-            print("실패!!!!")
+            print("실패!!!")
         }
 
+        
         
     }
     
