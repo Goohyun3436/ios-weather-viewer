@@ -11,7 +11,7 @@ final class MainViewModel: BaseViewModel {
     
     //MARK: - Input
     struct Input {
-        
+        let viewWillAppear: Observable<Void?> = Observable(nil)
     }
     
     //MARK: - Output
@@ -19,6 +19,7 @@ final class MainViewModel: BaseViewModel {
         let navigationTitle = Observable("")
         let refreshButtonImage = "arrow.clockwise"
         let searchButtonImage = "magnifyingglass"
+        let titleLabelText: Observable<String?> = Observable(nil)
     }
     
     //MARK: - Property
@@ -35,7 +36,9 @@ final class MainViewModel: BaseViewModel {
     
     //MARK: - Transform
     func transform() {
-        
+        input.viewWillAppear.lazyBind { [weak self] _ in
+            self?.output.titleLabelText.value = "대한민국, 서울"
+        }
     }
     
 }

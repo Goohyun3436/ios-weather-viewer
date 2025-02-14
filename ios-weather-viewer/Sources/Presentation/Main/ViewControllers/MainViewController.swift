@@ -6,8 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
-import SnapKit
 
 class MainViewController: BaseViewController {
     
@@ -24,6 +22,11 @@ class MainViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.input.viewWillAppear.value = ()
     }
     
     //MARK: - Setup Method
@@ -47,6 +50,10 @@ class MainViewController: BaseViewController {
     override func setupBinds() {
         viewModel.output.navigationTitle.bind { [weak self] title in
             self?.title = title
+        }
+        
+        viewModel.output.titleLabelText.lazyBind { [weak self] text in
+            self?.mainView.titleLabel.text = text
         }
     }
     

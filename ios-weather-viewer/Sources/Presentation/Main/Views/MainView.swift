@@ -6,13 +6,29 @@
 //
 
 import UIKit
+import SnapKit
 
 final class MainView: BaseView {
     
-    override func setupUI() {}
+    //MARK: - UI Property
+    let titleLabel = UILabel()
     
-    override func setupConstraints() {}
+    //MARK: - Setup Method
+    override func setupUI() {
+        [titleLabel].forEach {
+            addSubview($0)
+        }
+    }
     
-    override func setupAttributes() {}
+    override func setupConstraints() {
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide)
+            make.leading.equalToSuperview().offset(16)
+        }
+    }
+    
+    override func setupAttributes() {
+        titleLabel.font = UIFont.systemFont(ofSize: 32, weight: .bold)
+    }
     
 }
