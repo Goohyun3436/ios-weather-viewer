@@ -5,4 +5,12 @@
 //  Created by Goo on 2/13/25.
 //
 
-import Foundation
+import UIKit
+
+final class AppAppearance {
+    
+    static func setupAppearance() {
+        
+    }
+    
+}
