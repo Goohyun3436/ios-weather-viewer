@@ -17,7 +17,6 @@ class MainViewController: BaseViewController {
         super.viewDidLoad()
         view.backgroundColor = .red
         
-        print(CityStaticStorage.cities)
     }
     
 }

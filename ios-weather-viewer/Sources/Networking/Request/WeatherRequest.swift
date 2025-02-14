@@ -21,9 +21,9 @@ enum WeatherRequest {
     private var path: String {
         switch self {
         case .group:
-            return "/data/2.5/group"
+            return "/group"
         case .current:
-            return "/data/2.5/weather"
+            return "/weather"
         }
     }
     
