@@ -9,14 +9,33 @@ import Foundation
 
 final class MainViewModel: BaseViewModel {
     
-    struct Input {}
+    //MARK: - Input
+    struct Input {
+        
+    }
     
-    struct Output {}
+    //MARK: - Output
+    struct Output {
+        let navigationTitle = Observable("")
+        let refreshButtonImage = "arrow.clockwise"
+        let searchButtonImage = "magnifyingglass"
+    }
     
+    //MARK: - Property
+    private(set) var input: Input
+    private(set) var output: Output
+    
+    //MARK: - Initializer Method
     init() {
+        input = Input()
+        output = Output()
+        
         transform()
     }
     
-    func transform() {}
+    //MARK: - Transform
+    func transform() {
+        
+    }
     
 }

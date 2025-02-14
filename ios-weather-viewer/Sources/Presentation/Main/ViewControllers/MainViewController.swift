@@ -11,35 +11,48 @@ import SnapKit
 
 class MainViewController: BaseViewController {
     
-    private let imageView1 = UIImageView()
+    //MARK: - UI Property
+    private let mainView = MainView()
+    
+    //MARK: - Property
+    private let viewModel = MainViewModel()
+    
+    //MARK: - Override Method
+    override func loadView() {
+        view = mainView
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
-        view.addSubview(imageView1)
-        imageView1.snp.makeConstraints { make in
-            make.centerX.equalTo(view.safeAreaLayoutGuide)
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(16)
-            make.width.equalTo(400)
-            make.height.equalTo(200)
-        }
-        
-        let query: Query? = "Clouds"
-        
-        guard let query else { return }
-        
-        NetworkManager.shared.request(PhotoRequest.search(query), PhotoResponse.self) { [weak self] data in
-            let small = URL(string: data.results[0].urls.small)
-            
-            DispatchQueue.main.async {
-                self?.imageView1.kf.setImage(with: small)
-            }
-        } failureHandler: {
-            print("실패!!!")
-        }
-
-        
-        
     }
+    
+    //MARK: - Setup Method
+    override func setupActions() {
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(
+                image: UIImage(systemName: viewModel.output.searchButtonImage),
+                style: .plain,
+                target: self,
+                action: #selector(searchButtonTapped)
+            ),
+            UIBarButtonItem(
+                image: UIImage(systemName: viewModel.output.refreshButtonImage),
+                style: .plain,
+                target: self,
+                action: #selector(refreshButtonTapped)
+            )
+        ]
+    }
+    
+    override func setupBinds() {
+        viewModel.output.navigationTitle.bind { [weak self] title in
+            self?.title = title
+        }
+    }
+    
+    //MARK: - Method
+    @objc private func refreshButtonTapped() {}
+    
+    @objc private func searchButtonTapped() {}
     
 }
