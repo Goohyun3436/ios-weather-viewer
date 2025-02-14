@@ -7,14 +7,26 @@
 
 import Foundation
 
+protocol APIRequest {
+    var endpoint: String { get }
+    var path: String { get }
+    var parameters: Parameters { get }
+    var method: HTTPMethod { get }
+    var header: HTTPHeaders? { get }
+}
+
+enum HTTPMethod: String {
+    case get = "GET"
+}
+
 final class NetworkManager {
     
     static let shared = NetworkManager()
     
     private init() {}
     
-    func openWeather<ResponseType: Decodable>(
-        _ request: WeatherRequest,
+    func request<ResponseType: Decodable>(
+        _ request: APIRequest,
         _ responseT: ResponseType.Type,
         completionHandler: @escaping (ResponseType) -> Void,
         failureHandler: @escaping () -> Void
@@ -27,7 +39,14 @@ final class NetworkManager {
         
         guard let url = urlComponents.url else { return }
         
-        let urlRequest = URLRequest(url: url, timeoutInterval: 5)
+        var urlRequest = URLRequest(url: url, timeoutInterval: 5)
+        urlRequest.httpMethod = request.method.rawValue
+        
+        if let header = request.header {
+            header.forEach {
+                urlRequest.addValue($0.value, forHTTPHeaderField: $0.key)
+            }
+        }
         
         print(urlComponents)
         

@@ -20,10 +20,10 @@ struct WeatherResponse: Decodable {
 }
 
 struct ForecastResponse: Decodable {
-    let list: [ForecastWeatherInfo]
+    let list: [ForecastInfo]
 }
 
-struct ForecastWeatherInfo: Decodable {
+struct ForecastInfo: Decodable {
     let weather: [WeatherInfo]
     let main: MainInfo
     let wind: WindInfo

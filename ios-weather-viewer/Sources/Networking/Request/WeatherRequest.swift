@@ -7,10 +7,7 @@
 
 import Foundation
 
-enum WeatherRequest {
-    typealias CityId = Int
-    typealias Parameters = [String: String]
-    
+enum WeatherRequest: APIRequest {
     case group(_ ids: [CityId], _ units: MeasurementUnit = .metric, _ language: Language = .kr)
     case weather(_ id: CityId, _ units: MeasurementUnit = .metric, _ language: Language = .kr)
     case forecast(_ id: CityId, _ units: MeasurementUnit = .metric, _ language: Language = .kr)
@@ -19,7 +16,7 @@ enum WeatherRequest {
         return APIUrl.openWeather + self.path
     }
     
-    private var path: String {
+    var path: String {
         switch self {
         case .group:
             return "/group"
@@ -55,6 +52,14 @@ enum WeatherRequest {
                 "lang": language.rawValue
             ]
         }
+    }
+    
+    var method: HTTPMethod {
+        return .get
+    }
+    
+    var header: HTTPHeaders? {
+        return nil
     }
 }
 
