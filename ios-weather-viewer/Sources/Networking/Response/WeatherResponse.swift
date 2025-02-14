@@ -20,10 +20,22 @@ struct WeatherResponse: Decodable {
 }
 
 struct WeatherInfo: Decodable {
-    let id: Int
     let main: String
     let description: String
     let icon: String
+    let iconUrl: String
+    
+    enum CodingKeys: String, CodingKey {
+        case main, description, icon
+    }
+    
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        main = try container.decode(String.self, forKey: .main)
+        description = try container.decode(String.self, forKey: .description)
+        icon = try container.decode(String.self, forKey: .icon)
+        iconUrl = WeatherImageRequest.small(icon).endpoint
+    }
 }
 
 struct MainInfo: Decodable {

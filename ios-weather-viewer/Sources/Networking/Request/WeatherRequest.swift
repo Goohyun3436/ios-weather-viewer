@@ -13,7 +13,6 @@ enum WeatherRequest {
     
     case group(_ ids: [CityId], _ units: MeasurementUnit = .metric, _ language: Language = .kr)
     case current(_ id: CityId, _ units: MeasurementUnit = .metric, _ language: Language = .kr)
-    case image(_ icon: String, _ scale: ImageScale = .small)
     
     var endpoint: String {
         return APIUrl.openWeather + self.path
@@ -25,8 +24,6 @@ enum WeatherRequest {
             return "/data/2.5/group"
         case .current:
             return "/data/2.5/weather"
-        case .image(let icon, let scale):
-            return "/img/wn/\(icon)\(scale).png"
         }
     }
     
@@ -47,8 +44,24 @@ enum WeatherRequest {
                 "units": units.rawValue,
                 "lang": language.rawValue
             ]
-        case .image(_, _):
-            return [:]
+        }
+    }
+}
+
+enum WeatherImageRequest {
+    case small(_ icon: String)
+    case twice(_ icon: String)
+    
+    var endpoint: String {
+        return APIUrl.openWeatherImage + self.path
+    }
+    
+    private var path: String {
+        switch self {
+        case .small(let icon):
+            return "/img/wn/\(icon).png"
+        case .twice(let icon):
+            return "/img/wn/\(icon)@2x.png"
         }
     }
 }
@@ -62,9 +75,4 @@ enum MeasurementUnit: String {
 enum Language: String {
     case en
     case kr
-}
-
-enum ImageScale: String {
-    case small = ""
-    case twice = "@2x"
 }

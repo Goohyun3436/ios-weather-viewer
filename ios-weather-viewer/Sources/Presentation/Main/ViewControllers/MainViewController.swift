@@ -6,14 +6,25 @@
 //
 
 import UIKit
+import Kingfisher
+import SnapKit
 
 class MainViewController: BaseViewController {
+    
+    private let imageView = UIImageView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .red
         
-        openWeatherGroupAPI()
+        view.addSubview(imageView)
+        imageView.snp.makeConstraints { make in
+            make.center.equalTo(view.safeAreaLayoutGuide)
+            make.size.equalTo(100)
+        }
+        imageView.clipsToBounds = true
+        
+        openWeatherImageAPI()
     }
     
     private func openWeatherGroupAPI() {
@@ -42,6 +53,14 @@ class MainViewController: BaseViewController {
         }
     }
     
-    
+    private func openWeatherImageAPI() {
+        let iconUrl1: String? = "https://openweathermap.org/img/wn/01n.png"
+        let iconUrl2: String? = "https://openweathermap.org/img/wn/01n@2x.png"
+        
+        guard let iconUrl1, let iconUrl2 else { return }
+        
+        let url = URL(string: iconUrl1)
+        imageView.kf.setImage(with: url)
+    }
     
 }
