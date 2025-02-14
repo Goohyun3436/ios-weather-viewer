@@ -27,7 +27,7 @@ final class NetworkManager {
         
         guard let url = urlComponents.url else { return }
         
-        var urlRequest = URLRequest(url: url, timeoutInterval: 5)
+        let urlRequest = URLRequest(url: url, timeoutInterval: 5)
         
         print(urlComponents)
         

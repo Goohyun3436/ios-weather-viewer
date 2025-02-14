@@ -13,20 +13,35 @@ class MainViewController: BaseViewController {
         super.viewDidLoad()
         view.backgroundColor = .red
         
-        openWeatherCurrentAPI()
+        openWeatherGroupAPI()
     }
     
-    private func openWeatherCurrentAPI() {
+    private func openWeatherGroupAPI() {
         
-        let query: String? = "london"
+        let ids: [Int]? = [6094817, 5128581, 2643743]
         
-        guard let query else { return }
+        guard let ids else { return }
         
-        NetworkManager.shared.weather(.current(query), WeatherResponse.self) { data in
+        NetworkManager.shared.weather(.group(ids), WeatherGroupResponse.self) { data in
             dump(data)
         } failureHandler: {
             print("실패!!!!")
         }
     }
+    
+    private func openWeatherCurrentAPI() {
+        
+        let id: Int? = 6094817
+        
+        guard let id else { return }
+        
+        NetworkManager.shared.weather(.current(id), WeatherResponse.self) { data in
+            dump(data)
+        } failureHandler: {
+            print("실패!!!!")
+        }
+    }
+    
+    
     
 }

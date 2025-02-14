@@ -7,6 +7,10 @@
 
 import Foundation
 
+struct WeatherGroupResponse: Decodable {
+    let list: [WeatherResponse]
+}
+
 struct WeatherResponse: Decodable {
     let weather: [WeatherInfo]
     let main: MainInfo

@@ -8,10 +8,11 @@
 import Foundation
 
 enum WeatherRequest {
-    typealias Query = String
+    typealias CityId = Int
     typealias Parameters = [String: String]
     
-    case current(_ query: Query, _ units: MeasurementUnit = .metric, _ language: Language = .kr)
+    case group(_ ids: [CityId], _ units: MeasurementUnit = .metric, _ language: Language = .kr)
+    case current(_ id: CityId, _ units: MeasurementUnit = .metric, _ language: Language = .kr)
     case image(_ icon: String, _ scale: ImageScale = .small)
     
     var endpoint: String {
@@ -20,6 +21,8 @@ enum WeatherRequest {
     
     private var path: String {
         switch self {
+        case .group:
+            return "/data/2.5/group"
         case .current:
             return "/data/2.5/weather"
         case .image(let icon, let scale):
@@ -29,9 +32,17 @@ enum WeatherRequest {
     
     var parameters: Parameters {
         switch self {
-        case .current(let query, let units, let language):
+        case .group(let ids, let units, let language):
+            let id = ids.map { String($0) }.joined(separator: ",")
             return [
-                "q": query,
+                "id": id,
+                "appid": APIKey.openWeather,
+                "units": units.rawValue,
+                "lang": language.rawValue
+            ]
+        case .current(let id, let units, let language):
+            return [
+                "id": "\(id)",
                 "appid": APIKey.openWeather,
                 "units": units.rawValue,
                 "lang": language.rawValue
