@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		F85126F52D5DDBB00075F21E /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = F85126F42D5DDBB00075F21E /* .gitignore */; };
+		F85128F12D5F44F80075F21E /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = F85128F02D5F44F80075F21E /* Kingfisher */; };
+		F85128F42D5F456E0075F21E /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = F85128F32D5F456E0075F21E /* SnapKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +43,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F85128F12D5F44F80075F21E /* Kingfisher in Frameworks */,
+				F85128F42D5F456E0075F21E /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +88,8 @@
 			);
 			name = "ios-weather-viewer";
 			packageProductDependencies = (
+				F85128F02D5F44F80075F21E /* Kingfisher */,
+				F85128F32D5F456E0075F21E /* SnapKit */,
 			);
 			productName = "ios-weather-viewer";
 			productReference = F85126DC2D5DDB320075F21E /* ios-weather-viewer.app */;
@@ -113,6 +119,10 @@
 			);
 			mainGroup = F85126D32D5DDB320075F21E;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				F85128EF2D5F44F80075F21E /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				F85128F22D5F456E0075F21E /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = F85126DD2D5DDB320075F21E /* Products */;
 			projectDirPath = "";
@@ -354,6 +364,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F85128EF2D5F44F80075F21E /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.2.0;
+			};
+		};
+		F85128F22D5F456E0075F21E /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F85128F02D5F44F80075F21E /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F85128EF2D5F44F80075F21E /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+		F85128F32D5F456E0075F21E /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F85128F22D5F456E0075F21E /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F85126D42D5DDB320075F21E /* Project object */;
 }
