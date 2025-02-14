@@ -55,6 +55,10 @@ class MainViewController: BaseViewController {
         viewModel.output.titleLabelText.lazyBind { [weak self] text in
             self?.mainView.titleLabel.text = text
         }
+        
+        viewModel.output.datetimeLabelText.lazyBind { [weak self] text in
+            self?.mainView.datetimeLabel.text = text
+        }
     }
     
     //MARK: - Method

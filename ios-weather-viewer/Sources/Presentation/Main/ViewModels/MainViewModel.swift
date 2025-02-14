@@ -20,6 +20,7 @@ final class MainViewModel: BaseViewModel {
         let refreshButtonImage = "arrow.clockwise"
         let searchButtonImage = "magnifyingglass"
         let titleLabelText: Observable<String?> = Observable(nil)
+        let datetimeLabelText: Observable<String?> = Observable(nil)
     }
     
     //MARK: - Property
@@ -38,6 +39,7 @@ final class MainViewModel: BaseViewModel {
     func transform() {
         input.viewWillAppear.lazyBind { [weak self] _ in
             self?.output.titleLabelText.value = "대한민국, 서울"
+            self?.output.datetimeLabelText.value = "1월 29일(수) 오후 3시 12분"
         }
     }
     
