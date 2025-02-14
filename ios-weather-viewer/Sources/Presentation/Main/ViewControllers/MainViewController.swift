@@ -6,8 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
-import SnapKit
 
 class MainViewController: BaseViewController {
     
@@ -16,6 +14,17 @@ class MainViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .red
+        
+        let id: Int? = 524901
+        
+        guard let id else { return }
+        
+        NetworkManager.shared.openWeather(.forecast(id), ForecastResponse.self) { data in
+            dump(data)
+        } failureHandler: {
+            print("실패!!!!")
+        }
+
         
     }
     

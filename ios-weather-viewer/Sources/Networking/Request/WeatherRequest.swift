@@ -12,7 +12,8 @@ enum WeatherRequest {
     typealias Parameters = [String: String]
     
     case group(_ ids: [CityId], _ units: MeasurementUnit = .metric, _ language: Language = .kr)
-    case current(_ id: CityId, _ units: MeasurementUnit = .metric, _ language: Language = .kr)
+    case weather(_ id: CityId, _ units: MeasurementUnit = .metric, _ language: Language = .kr)
+    case forecast(_ id: CityId, _ units: MeasurementUnit = .metric, _ language: Language = .kr)
     
     var endpoint: String {
         return APIUrl.openWeather + self.path
@@ -22,8 +23,10 @@ enum WeatherRequest {
         switch self {
         case .group:
             return "/group"
-        case .current:
+        case .weather:
             return "/weather"
+        case .forecast:
+            return "/forecast"
         }
     }
     
@@ -37,7 +40,14 @@ enum WeatherRequest {
                 "units": units.rawValue,
                 "lang": language.rawValue
             ]
-        case .current(let id, let units, let language):
+        case .weather(let id, let units, let language):
+            return [
+                "id": "\(id)",
+                "appid": APIKey.openWeather,
+                "units": units.rawValue,
+                "lang": language.rawValue
+            ]
+        case .forecast(let id, let units, let language):
             return [
                 "id": "\(id)",
                 "appid": APIKey.openWeather,

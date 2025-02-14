@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct CityInfo: Decodable {
-    let cities: [City]
+struct CitiesInfo: Decodable {
+    let cities: [CityInfo]
 }
 
-struct City: Decodable {
+struct CityInfo: Decodable {
     let id: Int
     let city: String
     let koCityName: String

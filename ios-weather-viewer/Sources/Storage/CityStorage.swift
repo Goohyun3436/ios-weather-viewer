@@ -29,7 +29,7 @@ final class CityStorage {
         
         let data = jsonString.data(using: .utf8)
         
-        guard let data, let cities = try? decoder.decode(CityInfo.self, from: data) else {
+        guard let data, let cities = try? decoder.decode(CitiesInfo.self, from: data) else {
             return
         }
         
@@ -39,5 +39,5 @@ final class CityStorage {
 }
 
 enum CityStaticStorage {
-    fileprivate(set) static var cities  = CityInfo(cities: [City]())
+    fileprivate(set) static var cities  = CitiesInfo(cities: [CityInfo]())
 }

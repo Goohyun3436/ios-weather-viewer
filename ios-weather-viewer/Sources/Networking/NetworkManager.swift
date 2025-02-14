@@ -13,7 +13,7 @@ final class NetworkManager {
     
     private init() {}
     
-    func weather<ResponseType: Decodable>(
+    func openWeather<ResponseType: Decodable>(
         _ request: WeatherRequest,
         _ responseT: ResponseType.Type,
         completionHandler: @escaping (ResponseType) -> Void,
