@@ -26,6 +26,7 @@ final class MainViewController: BaseViewController {
         mainView.tableView.dataSource = self
         mainView.tableView.register(IconNLabelTableViewCell.self, forCellReuseIdentifier: IconNLabelTableViewCell.id)
         mainView.tableView.register(LabelNSubLabelTableViewCell.self, forCellReuseIdentifier: LabelNSubLabelTableViewCell.id)
+        mainView.tableView.register(LabelTableViewCell.self, forCellReuseIdentifier: LabelTableViewCell.id)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -107,6 +108,13 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
             
         case .fellsLikeTemp:
+            let cell = tableView.dequeueReusableCell(withIdentifier: LabelTableViewCell.id, for: indexPath) as! LabelTableViewCell
+            
+            if let chatInfo = viewModel.output.present.value?.feelsLikeTempChat {
+                cell.setData(chatInfo)
+            }
+            
+            return cell
             
         case .sunriseNSunset:
             
