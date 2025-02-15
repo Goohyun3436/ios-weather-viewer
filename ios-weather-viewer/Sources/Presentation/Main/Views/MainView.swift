@@ -34,7 +34,7 @@ final class MainView: BaseView {
         }
         
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(datetimeLabel.snp.bottom)
+            make.top.equalTo(datetimeLabel.snp.bottom).offset(8)
             make.horizontalEdges.equalToSuperview()
             make.bottom.equalTo(safeAreaLayoutGuide)
         }
@@ -43,10 +43,8 @@ final class MainView: BaseView {
     override func setupAttributes() {
         locationNameLabel.font = UIFont.systemFont(ofSize: 32, weight: .bold)
         datetimeLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
-        tableView.contentInset = UIEdgeInsets(top: 16, left: 0, bottom: 16, right: 0)
         tableView.bounces = false
-        
-        tableView.backgroundColor = .red
+        tableView.separatorStyle = .none
     }
     
 }

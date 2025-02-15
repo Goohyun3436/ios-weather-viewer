@@ -31,13 +31,15 @@ final class LabelTableViewCell: BaseTableViewCell {
     
     override func setupConstraints() {
         bubble.snp.makeConstraints { make in
-            make.verticalEdges.leading.equalTo(contentView).inset(8)
-            make.trailing.lessThanOrEqualTo(contentView).inset(-8)
+            make.verticalEdges.equalTo(contentView).inset(4)
+            make.leading.equalTo(contentView).offset(16)
+            make.trailing.lessThanOrEqualTo(contentView).offset(-16)
         }
     }
     
     override func setupAttributes() {
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.numberOfLines = 0
+        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
     }
     
 }

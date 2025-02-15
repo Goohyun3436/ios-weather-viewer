@@ -16,7 +16,7 @@ final class BubbleView: UIStackView {
         
         switch axis {
         case .horizontal:
-            self.alignment = .top
+            self.alignment = .center
         case .vertical:
             self.alignment = .leading
         @unknown default:
@@ -25,8 +25,10 @@ final class BubbleView: UIStackView {
         
         self.spacing = 8
         self.layer.cornerRadius = 8
+        self.layer.borderWidth = 1
+        self.layer.borderColor = UIColor.black.cgColor
         self.isLayoutMarginsRelativeArrangement = true
-        self.layoutMargins = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
+        self.layoutMargins = UIEdgeInsets(top: 10, left: 12, bottom: 10, right: 12)
         self.backgroundColor = UIColor.white
     }
     

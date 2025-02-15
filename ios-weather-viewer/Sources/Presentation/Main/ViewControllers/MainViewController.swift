@@ -27,6 +27,7 @@ final class MainViewController: BaseViewController {
         mainView.tableView.register(IconNLabelTableViewCell.self, forCellReuseIdentifier: IconNLabelTableViewCell.id)
         mainView.tableView.register(LabelNSubLabelTableViewCell.self, forCellReuseIdentifier: LabelNSubLabelTableViewCell.id)
         mainView.tableView.register(LabelTableViewCell.self, forCellReuseIdentifier: LabelTableViewCell.id)
+        mainView.tableView.register(ImageNLabelTableViewCell.self, forCellReuseIdentifier: ImageNLabelTableViewCell.id)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -90,8 +91,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         case .weather:
             let cell = tableView.dequeueReusableCell(withIdentifier: IconNLabelTableViewCell.id, for: indexPath) as! IconNLabelTableViewCell
             
-            cell.backgroundColor = .orange
-            
             if let chatInfo = viewModel.output.present.value?.weatherChat {
                 cell.setData(chatInfo)
             }
@@ -107,20 +106,34 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             
             return cell
             
-        case .fellsLikeTemp:
+        case .fellsLikeTemp, .sunriseNSunset, .humidityNWindspeed:
             let cell = tableView.dequeueReusableCell(withIdentifier: LabelTableViewCell.id, for: indexPath) as! LabelTableViewCell
             
-            if let chatInfo = viewModel.output.present.value?.feelsLikeTempChat {
+            if chat == .fellsLikeTemp,
+               let chatInfo = viewModel.output.present.value?.feelsLikeTempChat {
+                cell.setData(chatInfo)
+            }
+            
+            if chat == .sunriseNSunset,
+               let chatInfo = viewModel.output.present.value?.sunriseNSunsetChat {
+                cell.setData(chatInfo)
+            }
+            
+            if chat == .humidityNWindspeed,
+               let chatInfo = viewModel.output.present.value?.humidityNWindspeedChat {
                 cell.setData(chatInfo)
             }
             
             return cell
             
-        case .sunriseNSunset:
-            
-        case .humidityNWindspeed:
-            
         case .photo:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ImageNLabelTableViewCell.id, for: indexPath) as! ImageNLabelTableViewCell
+            
+            if let chatInfo = viewModel.output.present.value?.photoChat {
+                cell.setData(chatInfo)
+            }
+            
+            return cell
             
         }
     }

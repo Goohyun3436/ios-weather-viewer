@@ -13,7 +13,7 @@ struct MainPresent {
     let weatherChat: IconNLabelChat
     let tempChat: LabelNSubLabelChat
     let feelsLikeTempChat: LabelChat
-    let sunriceNSunsetChat: LabelChat
+    let sunriseNSunsetChat: LabelChat
     let humidityNWindspeedChat: LabelChat
     let photoChat: ImageNLabelChat
 }
