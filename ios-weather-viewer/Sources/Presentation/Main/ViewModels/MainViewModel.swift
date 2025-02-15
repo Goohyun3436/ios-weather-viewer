@@ -21,14 +21,15 @@ final class MainViewModel: BaseViewModel {
         let searchButtonImage = "magnifyingglass"
         let forecastButtonImageTitle = Observable(UIButtonImageTitle(
             image: "chevron.down.2",
-            title: " 5일간 예보 보러가기")
-        )
+            title: " 5일간 예보 보러가기"
+        ))
         let chatCases = Chat.allCases
-        let city: Observable<CityInfo?> = Observable(nil)
         let present: Observable<MainPresent?> = Observable(nil)
     }
     
+    //MARK: - Private
     private struct Private {
+        let city: Observable<CityInfo?> = Observable(nil)
         var weather: Observable<WeatherResponse?> = Observable(nil)
     }
     
@@ -49,12 +50,12 @@ final class MainViewModel: BaseViewModel {
     //MARK: - Transform
     func transform() {
         input.viewWillAppear.lazyBind { [weak self] _ in
-            self?.output.city.value = self?.getCity()
+            self?.priv.city.value = self?.getCity()
             self?.priv.weather.value = self?.getWeather()
         }
         
         priv.weather.lazyBind { [weak self] weather in
-            guard let city = self?.output.city.value, let weather else {
+            guard let city = self?.priv.city.value, let weather else {
                 // nil 처리
                 return
             }

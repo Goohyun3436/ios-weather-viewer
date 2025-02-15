@@ -49,8 +49,6 @@ final class MainView: BaseView {
     override func setupAttributes() {
         locationNameLabel.font = UIFont.systemFont(ofSize: 32, weight: .bold)
         datetimeLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
-        tableView.bounces = false
-        tableView.separatorStyle = .none
         forecastButton.tintColor = UIColor.black
         forecastButton.setTitleColor(UIColor.black, for: .normal)
         forecastButton.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .bold)

@@ -1,0 +1,825 @@
+{
+    "cnt": 20,
+    "list": [
+        {
+            "coord": {
+                "lon": -43.2075,
+                "lat": -22.9028
+            },
+            "sys": {
+                "country": "BR",
+                "timezone": -10800,
+                "sunrise": 1739608904,
+                "sunset": 1739655145
+            },
+            "weather": [
+                {
+                    "id": 801,
+                    "main": "Clouds",
+                    "description": "약간의 구름이 낀 하늘",
+                    "icon": "02d"
+                }
+            ],
+            "main": {
+                "temp": 28.22,
+                "feels_like": 31.54,
+                "temp_min": 27.98,
+                "temp_max": 33,
+                "pressure": 1011,
+                "sea_level": 1011,
+                "grnd_level": 1012,
+                "humidity": 73
+            },
+            "visibility": 10000,
+            "wind": {
+                "speed": 7.2,
+                "deg": 150
+            },
+            "clouds": {
+                "all": 20
+            },
+            "dt": 1739635747,
+            "id": 3451190,
+            "name": "Rio de Janeiro"
+        },
+        {
+            "coord": {
+                "lon": 23.3242,
+                "lat": 42.6975
+            },
+            "sys": {
+                "country": "BG",
+                "timezone": 7200,
+                "sunrise": 1739597039,
+                "sunset": 1739635076
+            },
+            "weather": [
+                {
+                    "id": 803,
+                    "main": "Clouds",
+                    "description": "튼구름",
+                    "icon": "04n"
+                }
+            ],
+            "main": {
+                "temp": 1.77,
+                "feels_like": -2.78,
+                "temp_min": 1.77,
+                "temp_max": 1.83,
+                "pressure": 1018,
+                "sea_level": 1018,
+                "grnd_level": 937,
+                "humidity": 76
+            },
+            "visibility": 10000,
+            "wind": {
+                "speed": 5.14,
+                "deg": 270
+            },
+            "clouds": {
+                "all": 75
+            },
+            "dt": 1739635745,
+            "id": 727011,
+            "name": "Sofia"
+        },
+        {
+            "coord": {
+                "lon": -1.5383,
+                "lat": 12.3642
+            },
+            "sys": {
+                "country": "BF",
+                "timezone": 0,
+                "sunrise": 1739600890,
+                "sunset": 1739643159
+            },
+            "weather": [
+                {
+                    "id": 801,
+                    "main": "Clouds",
+                    "description": "약간의 구름이 낀 하늘",
+                    "icon": "02d"
+                }
+            ],
+            "main": {
+                "temp": 37.17,
+                "feels_like": 34.23,
+                "temp_min": 37.17,
+                "temp_max": 37.17,
+                "pressure": 1007,
+                "sea_level": 1007,
+                "grnd_level": 974,
+                "humidity": 9
+            },
+            "visibility": 10000,
+            "wind": {
+                "speed": 5.57,
+                "deg": 92
+            },
+            "clouds": {
+                "all": 18
+            },
+            "dt": 1739635745,
+            "id": 2357048,
+            "name": "Ouagadougou"
+        },
+        {
+            "coord": {
+                "lon": 104.916,
+                "lat": 11.5625
+            },
+            "sys": {
+                "country": "KH",
+                "timezone": 25200,
+                "sunrise": 1739661682,
+                "sunset": 1739704065
+            },
+            "weather": [
+                {
+                    "id": 802,
+                    "main": "Clouds",
+                    "description": "구름조금",
+                    "icon": "03n"
+                }
+            ],
+            "main": {
+                "temp": 27.95,
+                "feels_like": 34.29,
+                "temp_min": 27.95,
+                "temp_max": 27.95,
+                "pressure": 1010,
+                "sea_level": 1010,
+                "grnd_level": 1008,
+                "humidity": 94
+            },
+            "visibility": 10000,
+            "wind": {
+                "speed": 3.6,
+                "deg": 210
+            },
+            "clouds": {
+                "all": 40
+            },
+            "dt": 1739635754,
+            "id": 1821306,
+            "name": "Phnom Penh"
+        },
+        {
+            "coord": {
+                "lon": 11.5167,
+                "lat": 3.8667
+            },
+            "sys": {
+                "country": "CM",
+                "timezone": 3600,
+                "sunrise": 1739597295,
+                "sunset": 1739640488
+            },
+            "weather": [
+                {
+                    "id": 804,
+                    "main": "Clouds",
+                    "description": "온흐림",
+                    "icon": "04d"
+                }
+            ],
+            "main": {
+                "temp": 31.92,
+                "feels_like": 31.51,
+                "temp_min": 31.92,
+                "temp_max": 31.92,
+                "pressure": 1006,
+                "sea_level": 1006,
+                "grnd_level": 928,
+                "humidity": 36
+            },
+            "visibility": 10000,
+            "wind": {
+                "speed": 2.11,
+                "deg": 202
+            },
+            "clouds": {
+                "all": 94
+            },
+            "dt": 1739635748,
+            "id": 2220957,
+            "name": "Yaounde"
+        },
+        {
+            "coord": {
+                "lon": -75.6981,
+                "lat": 45.4112
+            },
+            "sys": {
+                "country": "CA",
+                "timezone": -18000,
+                "sunrise": 1739621055,
+                "sunset": 1739658590
+            },
+            "weather": [
+                {
+                    "id": 600,
+                    "main": "Snow",
+                    "description": "가벼운 눈",
+                    "icon": "13d"
+                }
+            ],
+            "main": {
+                "temp": -8.61,
+                "feels_like": -14.97,
+                "temp_min": -9.94,
+                "temp_max": -7.85,
+                "pressure": 1029,
+                "sea_level": 1029,
+                "grnd_level": 1017,
+                "humidity": 74
+            },
+            "visibility": 10000,
+            "wind": {
+                "speed": 4.12,
+                "deg": 90
+            },
+            "clouds": {
+                "all": 100
+            },
+            "dt": 1739636066,
+            "id": 6094817,
+            "name": "Ottawa"
+        },
+        {
+            "coord": {
+                "lon": -79.4163,
+                "lat": 43.7001
+            },
+            "sys": {
+                "country": "CA",
+                "timezone": -18000,
+                "sunrise": 1739621771,
+                "sunset": 1739659658
+            },
+            "weather": [
+                {
+                    "id": 804,
+                    "main": "Clouds",
+                    "description": "온흐림",
+                    "icon": "04d"
+                }
+            ],
+            "main": {
+                "temp": -2.3,
+                "feels_like": -8.72,
+                "temp_min": -2.73,
+                "temp_max": -1.94,
+                "pressure": 1022,
+                "sea_level": 1022,
+                "grnd_level": 1005,
+                "humidity": 71
+            },
+            "visibility": 10000,
+            "wind": {
+                "speed": 6.69,
+                "deg": 90
+            },
+            "clouds": {
+                "all": 100
+            },
+            "dt": 1739636067,
+            "id": 6167865,
+            "name": "Toronto"
+        },
+        {
+            "coord": {
+                "lon": -123.1193,
+                "lat": 49.2497
+            },
+            "sys": {
+                "country": "CA",
+                "timezone": -28800,
+                "sunrise": 1739632857,
+                "sunset": 1739669549
+            },
+            "weather": [
+                {
+                    "id": 804,
+                    "main": "Clouds",
+                    "description": "온흐림",
+                    "icon": "04d"
+                }
+            ],
+            "main": {
+                "temp": 2.19,
+                "feels_like": -1.88,
+                "temp_min": 1.25,
+                "temp_max": 2.94,
+                "pressure": 1027,
+                "sea_level": 1027,
+                "grnd_level": 1018,
+                "humidity": 89
+            },
+            "visibility": 92,
+            "wind": {
+                "speed": 4.47,
+                "deg": 70
+            },
+            "clouds": {
+                "all": 100
+            },
+            "dt": 1739636067,
+            "id": 6173331,
+            "name": "Vancouver"
+        },
+        {
+            "coord": {
+                "lon": -70.6483,
+                "lat": -33.4569
+            },
+            "sys": {
+                "country": "CL",
+                "timezone": -10800,
+                "sunrise": 1739614733,
+                "sunset": 1739662488
+            },
+            "weather": [
+                {
+                    "id": 800,
+                    "main": "Clear",
+                    "description": "맑음",
+                    "icon": "01d"
+                }
+            ],
+            "main": {
+                "temp": 23.97,
+                "feels_like": 23.23,
+                "temp_min": 22.53,
+                "temp_max": 24.69,
+                "pressure": 1013,
+                "sea_level": 1013,
+                "grnd_level": 929,
+                "humidity": 31
+            },
+            "visibility": 10000,
+            "wind": {
+                "speed": 5.14,
+                "deg": 170
+            },
+            "clouds": {
+                "all": 0
+            },
+            "dt": 1739635748,
+            "id": 3871336,
+            "name": "Santiago"
+        },
+        {
+            "coord": {
+                "lon": 116.3972,
+                "lat": 39.9075
+            },
+            "sys": {
+                "country": "CN",
+                "timezone": 28800,
+                "sunrise": 1739660787,
+                "sunset": 1739699449
+            },
+            "weather": [
+                {
+                    "id": 800,
+                    "main": "Clear",
+                    "description": "맑음",
+                    "icon": "01n"
+                }
+            ],
+            "main": {
+                "temp": 7.94,
+                "feels_like": 4.45,
+                "temp_min": 7.94,
+                "temp_max": 7.94,
+                "pressure": 1018,
+                "sea_level": 1018,
+                "grnd_level": 1013,
+                "humidity": 29
+            },
+            "visibility": 10000,
+            "wind": {
+                "speed": 6.51,
+                "deg": 335
+            },
+            "clouds": {
+                "all": 0
+            },
+            "dt": 1739635749,
+            "id": 1816670,
+            "name": "Beijing"
+        },
+        {
+            "coord": {
+                "lon": 121.4581,
+                "lat": 31.2222
+            },
+            "sys": {
+                "country": "CN",
+                "timezone": 28800,
+                "sunrise": 1739658899,
+                "sunset": 1739698908
+            },
+            "weather": [
+                {
+                    "id": 701,
+                    "main": "Mist",
+                    "description": "박무",
+                    "icon": "50n"
+                }
+            ],
+            "main": {
+                "temp": 6.92,
+                "feels_like": 4.81,
+                "temp_min": 6.92,
+                "temp_max": 6.92,
+                "pressure": 1020,
+                "sea_level": 1020,
+                "grnd_level": 1020,
+                "humidity": 93
+            },
+            "visibility": 3200,
+            "wind": {
+                "speed": 3,
+                "deg": 280
+            },
+            "clouds": {
+                "all": 28
+            },
+            "dt": 1739635749,
+            "id": 1796236,
+            "name": "Shanghai"
+        },
+        {
+            "coord": {
+                "lon": 113.25,
+                "lat": 23.1167
+            },
+            "sys": {
+                "country": "CN",
+                "timezone": 28800,
+                "sunrise": 1739660341,
+                "sunset": 1739701406
+            },
+            "weather": [
+                {
+                    "id": 804,
+                    "main": "Clouds",
+                    "description": "온흐림",
+                    "icon": "04n"
+                }
+            ],
+            "main": {
+                "temp": 23.17,
+                "feels_like": 23.19,
+                "temp_min": 23.17,
+                "temp_max": 23.17,
+                "pressure": 1016,
+                "sea_level": 1016,
+                "grnd_level": 1015,
+                "humidity": 63
+            },
+            "visibility": 10000,
+            "wind": {
+                "speed": 1.16,
+                "deg": 85
+            },
+            "clouds": {
+                "all": 88
+            },
+            "dt": 1739635749,
+            "id": 1809858,
+            "name": "Guangzhou"
+        },
+        {
+            "coord": {
+                "lon": 114.0683,
+                "lat": 22.5455
+            },
+            "sys": {
+                "country": "CN",
+                "timezone": 28800,
+                "sunrise": 1739660110,
+                "sunset": 1739701244
+            },
+            "weather": [
+                {
+                    "id": 800,
+                    "main": "Clear",
+                    "description": "맑음",
+                    "icon": "01n"
+                }
+            ],
+            "main": {
+                "temp": 18.75,
+                "feels_like": 19.06,
+                "temp_min": 17.96,
+                "temp_max": 20.15,
+                "pressure": 1016,
+                "sea_level": 1016,
+                "grnd_level": 1007,
+                "humidity": 91
+            },
+            "visibility": 10000,
+            "wind": {
+                "speed": 0.62,
+                "deg": 196
+            },
+            "clouds": {
+                "all": 1
+            },
+            "dt": 1739635749,
+            "id": 1795565,
+            "name": "Shenzhen"
+        },
+        {
+            "coord": {
+                "lon": -74.0817,
+                "lat": 4.6097
+            },
+            "sys": {
+                "country": "CO",
+                "timezone": -18000,
+                "sunrise": 1739617876,
+                "sunset": 1739660992
+            },
+            "weather": [
+                {
+                    "id": 802,
+                    "main": "Clouds",
+                    "description": "구름조금",
+                    "icon": "03d"
+                }
+            ],
+            "main": {
+                "temp": 19.73,
+                "feels_like": 19.12,
+                "temp_min": 19.73,
+                "temp_max": 19.73,
+                "pressure": 1015,
+                "sea_level": 1015,
+                "grnd_level": 738,
+                "humidity": 52
+            },
+            "visibility": 8000,
+            "wind": {
+                "speed": 2.57,
+                "deg": 220
+            },
+            "clouds": {
+                "all": 40
+            },
+            "dt": 1739635750,
+            "id": 3688689,
+            "name": "Bogota"
+        },
+        {
+            "coord": {
+                "lon": 15.3215,
+                "lat": -4.3246
+            },
+            "sys": {
+                "country": "CD",
+                "timezone": 3600,
+                "sunrise": 1739595940,
+                "sunset": 1739640016
+            },
+            "weather": [
+                {
+                    "id": 804,
+                    "main": "Clouds",
+                    "description": "온흐림",
+                    "icon": "04d"
+                }
+            ],
+            "main": {
+                "temp": 31.84,
+                "feels_like": 35.58,
+                "temp_min": 31.84,
+                "temp_max": 31.84,
+                "pressure": 1006,
+                "sea_level": 1006,
+                "grnd_level": 975,
+                "humidity": 56
+            },
+            "visibility": 10000,
+            "wind": {
+                "speed": 1.44,
+                "deg": 81
+            },
+            "clouds": {
+                "all": 91
+            },
+            "dt": 1739635748,
+            "id": 2314302,
+            "name": "Kinshasa"
+        },
+        {
+            "coord": {
+                "lon": -84.0833,
+                "lat": 9.9333
+            },
+            "sys": {
+                "country": "CR",
+                "timezone": -21600,
+                "sunrise": 1739620563,
+                "sunset": 1739663107
+            },
+            "weather": [
+                {
+                    "id": 803,
+                    "main": "Clouds",
+                    "description": "튼구름",
+                    "icon": "04d"
+                }
+            ],
+            "main": {
+                "temp": 24.38,
+                "feels_like": 24.26,
+                "temp_min": 23.97,
+                "temp_max": 24.38,
+                "pressure": 1015,
+                "sea_level": 1015,
+                "grnd_level": 850,
+                "humidity": 53
+            },
+            "visibility": 10000,
+            "wind": {
+                "speed": 6.69,
+                "deg": 90
+            },
+            "clouds": {
+                "all": 75
+            },
+            "dt": 1739635750,
+            "id": 3621849,
+            "name": "San Jose"
+        },
+        {
+            "coord": {
+                "lon": 15.978,
+                "lat": 45.8144
+            },
+            "sys": {
+                "country": "HR",
+                "timezone": 3600,
+                "sunrise": 1739599119,
+                "sunset": 1739636522
+            },
+            "weather": [
+                {
+                    "id": 801,
+                    "main": "Clouds",
+                    "description": "약간의 구름이 낀 하늘",
+                    "icon": "02d"
+                }
+            ],
+            "main": {
+                "temp": 3.27,
+                "feels_like": 1.29,
+                "temp_min": 1.82,
+                "temp_max": 3.27,
+                "pressure": 1022,
+                "sea_level": 1022,
+                "grnd_level": 1001,
+                "humidity": 54
+            },
+            "visibility": 10000,
+            "wind": {
+                "speed": 2.06,
+                "deg": 80
+            },
+            "clouds": {
+                "all": 20
+            },
+            "dt": 1739635759,
+            "id": 3186886,
+            "name": "Zagreb"
+        },
+        {
+            "coord": {
+                "lon": -82.383,
+                "lat": 23.133
+            },
+            "sys": {
+                "country": "CU",
+                "timezone": -18000,
+                "sunrise": 1739620912,
+                "sunset": 1739661941
+            },
+            "weather": [
+                {
+                    "id": 803,
+                    "main": "Clouds",
+                    "description": "튼구름",
+                    "icon": "04d"
+                }
+            ],
+            "main": {
+                "temp": 27.24,
+                "feels_like": 28.81,
+                "temp_min": 26.96,
+                "temp_max": 27.24,
+                "pressure": 1021,
+                "sea_level": 1021,
+                "grnd_level": 1015,
+                "humidity": 65
+            },
+            "visibility": 9000,
+            "wind": {
+                "speed": 6.17,
+                "deg": 100
+            },
+            "clouds": {
+                "all": 75
+            },
+            "dt": 1739635750,
+            "id": 3553478,
+            "name": "Havana"
+        },
+        {
+            "coord": {
+                "lon": 14.4208,
+                "lat": 50.088
+            },
+            "sys": {
+                "country": "CZ",
+                "timezone": 3600,
+                "sunrise": 1739599993,
+                "sunset": 1739636395
+            },
+            "weather": [
+                {
+                    "id": 803,
+                    "main": "Clouds",
+                    "description": "튼구름",
+                    "icon": "04d"
+                }
+            ],
+            "main": {
+                "temp": -0.98,
+                "feels_like": -3.67,
+                "temp_min": -1.74,
+                "temp_max": -0.14,
+                "pressure": 1023,
+                "sea_level": 1023,
+                "grnd_level": 987,
+                "humidity": 68
+            },
+            "visibility": 10000,
+            "wind": {
+                "speed": 2.06,
+                "deg": 330
+            },
+            "clouds": {
+                "all": 75
+            },
+            "dt": 1739635750,
+            "id": 3067696,
+            "name": "Prague"
+        },
+        {
+            "coord": {
+                "lon": 12.5655,
+                "lat": 55.6759
+            },
+            "sys": {
+                "country": "DK",
+                "timezone": 3600,
+                "sunrise": 1739601254,
+                "sunset": 1739636025
+            },
+            "weather": [
+                {
+                    "id": 803,
+                    "main": "Clouds",
+                    "description": "튼구름",
+                    "icon": "04d"
+                }
+            ],
+            "main": {
+                "temp": -1.04,
+                "feels_like": -1.04,
+                "temp_min": -1.06,
+                "temp_max": 0.19,
+                "pressure": 1022,
+                "sea_level": 1022,
+                "grnd_level": 1020,
+                "humidity": 93
+            },
+            "visibility": 2500,
+            "wind": {
+                "speed": 0.51,
+                "deg": 140
+            },
+            "clouds": {
+                "all": 75
+            },
+            "dt": 1739635754,
+            "id": 2618425,
+            "name": "Copenhagen"
+        }
+    ]
+}

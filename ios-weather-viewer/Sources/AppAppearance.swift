@@ -20,6 +20,9 @@ final class AppAppearance {
         
         BaseView.appearance().backgroundColor = UIColor.white
         BaseTableViewCell.appearance().selectionStyle = .none
+        
+        UITableView.appearance().bounces = false
+        UITableView.appearance().separatorStyle = .none
     }
     
 }
