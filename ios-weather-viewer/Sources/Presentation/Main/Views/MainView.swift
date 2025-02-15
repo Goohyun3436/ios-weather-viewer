@@ -14,10 +14,11 @@ final class MainView: BaseView {
     let locationNameLabel = UILabel()
     let datetimeLabel = UILabel()
     let tableView = UITableView()
+    let forecastButton = UIButton()
     
     //MARK: - Setup Method
     override func setupUI() {
-        [locationNameLabel, datetimeLabel, tableView].forEach {
+        [locationNameLabel, datetimeLabel, tableView, forecastButton].forEach {
             addSubview($0)
         }
     }
@@ -36,7 +37,12 @@ final class MainView: BaseView {
         tableView.snp.makeConstraints { make in
             make.top.equalTo(datetimeLabel.snp.bottom).offset(8)
             make.horizontalEdges.equalToSuperview()
-            make.bottom.equalTo(safeAreaLayoutGuide)
+            make.bottom.equalTo(forecastButton.snp.top)
+        }
+        
+        forecastButton.snp.makeConstraints { make in
+            make.bottom.horizontalEdges.equalTo(safeAreaLayoutGuide)
+            make.height.equalTo(50)
         }
     }
     
@@ -45,6 +51,9 @@ final class MainView: BaseView {
         datetimeLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         tableView.bounces = false
         tableView.separatorStyle = .none
+        forecastButton.tintColor = UIColor.black
+        forecastButton.setTitleColor(UIColor.black, for: .normal)
+        forecastButton.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .bold)
     }
     
 }

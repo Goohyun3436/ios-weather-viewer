@@ -43,7 +43,7 @@ final class ImageNLabelTableViewCell: BaseTableViewCell {
         
         photoImageView.snp.makeConstraints { make in
             make.width.equalTo(UIScreen.main.bounds.width - 16)
-            make.height.equalTo(300)
+            make.height.equalTo(200)
         }
     }
     

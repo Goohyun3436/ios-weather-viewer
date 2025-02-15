@@ -24,10 +24,7 @@ final class MainViewController: BaseViewController {
         super.viewDidLoad()
         mainView.tableView.delegate = self
         mainView.tableView.dataSource = self
-        mainView.tableView.register(IconNLabelTableViewCell.self, forCellReuseIdentifier: IconNLabelTableViewCell.id)
-        mainView.tableView.register(LabelNSubLabelTableViewCell.self, forCellReuseIdentifier: LabelNSubLabelTableViewCell.id)
-        mainView.tableView.register(LabelTableViewCell.self, forCellReuseIdentifier: LabelTableViewCell.id)
-        mainView.tableView.register(ImageNLabelTableViewCell.self, forCellReuseIdentifier: ImageNLabelTableViewCell.id)
+        setupTableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -58,6 +55,11 @@ final class MainViewController: BaseViewController {
             self?.title = title
         }
         
+        viewModel.output.forecastButtonImageTitle.bind { [weak self] button in
+            self?.mainView.forecastButton.setImage(UIImage(systemName: button.image), for: .normal)
+            self?.mainView.forecastButton.setTitle(button.title, for: .normal)
+        }
+        
         viewModel.output.present.lazyBind { [weak self] present in
             guard let present else {
                 //대응 필요
@@ -68,6 +70,13 @@ final class MainViewController: BaseViewController {
             self?.mainView.datetimeLabel.text = present.datetime
             
         }
+    }
+    
+    private func setupTableView() {
+        mainView.tableView.register(IconNLabelTableViewCell.self, forCellReuseIdentifier: IconNLabelTableViewCell.id)
+        mainView.tableView.register(LabelNSubLabelTableViewCell.self, forCellReuseIdentifier: LabelNSubLabelTableViewCell.id)
+        mainView.tableView.register(LabelTableViewCell.self, forCellReuseIdentifier: LabelTableViewCell.id)
+        mainView.tableView.register(ImageNLabelTableViewCell.self, forCellReuseIdentifier: ImageNLabelTableViewCell.id)
     }
     
     //MARK: - Method

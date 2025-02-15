@@ -19,6 +19,10 @@ final class MainViewModel: BaseViewModel {
         let navigationTitle = Observable("")
         let refreshButtonImage = "arrow.clockwise"
         let searchButtonImage = "magnifyingglass"
+        let forecastButtonImageTitle = Observable(UIButtonImageTitle(
+            image: "chevron.down.2",
+            title: " 5일간 예보 보러가기")
+        )
         let chatCases = Chat.allCases
         let city: Observable<CityInfo?> = Observable(nil)
         let present: Observable<MainPresent?> = Observable(nil)
