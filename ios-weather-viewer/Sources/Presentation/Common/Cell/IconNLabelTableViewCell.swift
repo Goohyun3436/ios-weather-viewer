@@ -1,5 +1,5 @@
 //
-//  ImageNLabelTableViewCell.swift
+//  IconNLabelTableViewCell.swift
 //  ios-weather-viewer
 //
 //  Created by Goo on 2/15/25.
@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 import SnapKit
 
-final class ImageNLabelTableViewCell: BaseTableViewCell {
+final class IconNLabelTableViewCell: BaseTableViewCell {
     
     //MARK: - UI Property
     private let bubble = BubbleView(axis: .horizontal)
@@ -20,13 +20,10 @@ final class ImageNLabelTableViewCell: BaseTableViewCell {
     static let id = "ImageNLabelTableViewCell"
     
     //MARK: - Method
-    func setData(image: String?, text: String?, targetStrings: [String]) {
-        if let image, let url = URL(string: image) {
-            leftImageView.kf.setImage(with: url)
-        }
-        
-        label.text = text
-        label.asFont(targetStrings, font: UIFont.systemFont(ofSize: 12, weight: .bold))
+    func setData(_ chat: IconNLabelChat) {
+        leftImageView.kf.setImage(with: URL(string: chat.image))
+        label.text = chat.text
+        label.asFont(chat.targetStrings, font: UIFont.systemFont(ofSize: 12, weight: .bold))
     }
     
     //MARK: - Setup Method

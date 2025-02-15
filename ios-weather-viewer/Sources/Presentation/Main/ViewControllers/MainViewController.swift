@@ -24,7 +24,7 @@ final class MainViewController: BaseViewController {
         super.viewDidLoad()
         mainView.tableView.delegate = self
         mainView.tableView.dataSource = self
-        mainView.tableView.register(ImageNLabelTableViewCell.self, forCellReuseIdentifier: ImageNLabelTableViewCell.id)
+        mainView.tableView.register(IconNLabelTableViewCell.self, forCellReuseIdentifier: IconNLabelTableViewCell.id)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,12 +55,15 @@ final class MainViewController: BaseViewController {
             self?.title = title
         }
         
-        viewModel.output.titleLabelText.lazyBind { [weak self] text in
-            self?.mainView.titleLabel.text = text
-        }
-        
-        viewModel.output.datetimeLabelText.lazyBind { [weak self] text in
-            self?.mainView.datetimeLabel.text = text
+        viewModel.output.mainPresent.lazyBind { [weak self] present in
+            guard let present else {
+                //대응 필요
+                return
+            }
+            
+            self?.mainView.locationNameLabel.text = present.locationName
+            self?.mainView.datetimeLabel.text = present.datetime
+            
         }
     }
     
@@ -74,20 +77,36 @@ final class MainViewController: BaseViewController {
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 12
+        return viewModel.output.chatCases.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ImageNLabelTableViewCell.id, for: indexPath) as! ImageNLabelTableViewCell
-        cell.backgroundColor = .orange
         
-        cell.setData(
-            image: WeatherImageRequest.small("02n").endpoint,
-            text: "오늘의 날씨는 맑음입니다.오늘의 날씨는 맑음입니다.오늘의 날씨는 맑음입니다.오늘의 날씨는 맑음입니다.오늘의 날씨는 맑음입니다.",
-            targetStrings: ["맑음"]
-        )
+        let chat = viewModel.output.chatCases[indexPath.row]
         
-        return cell
+        switch chat {
+        case .weather:
+            let cell = tableView.dequeueReusableCell(withIdentifier: IconNLabelTableViewCell.id, for: indexPath) as! IconNLabelTableViewCell
+            
+            cell.backgroundColor = .orange
+            
+            if let chatInfo = viewModel.output.present.value?.weatherChat {
+                cell.setData(chatInfo)
+            }
+            
+            return cell
+            
+        case .temp:
+            
+        case .fellsLikeTemp:
+            
+        case .sunriseNSunset:
+            
+        case .humidityNWindspeed:
+            
+        case .photo:
+            
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

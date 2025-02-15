@@ -17,6 +17,21 @@ struct WeatherResponse: Decodable {
     let wind: WindInfo
     let dt: Int
     let sys: SysInfo
+    let datetime: String
+    
+    enum CodingKeys: String, CodingKey {
+        case weather, main, wind, dt, sys
+    }
+    
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        weather = try container.decode([WeatherInfo].self, forKey: .weather)
+        main = try container.decode(MainInfo.self, forKey: .main)
+        wind = try container.decode(WindInfo.self, forKey: .wind)
+        dt = try container.decode(Int.self, forKey: .dt)
+        sys = try container.decode(SysInfo.self, forKey: .sys)
+        datetime = DateManager.shared.utcToKst(dt)
+    }
 }
 
 struct ForecastResponse: Decodable {
@@ -31,6 +46,7 @@ struct ForecastInfo: Decodable {
     let pop: Double
     let snow: Volume?
     let rain: Volume?
+    let datetime: String
     
     enum CodingKeys: String, CodingKey {
         case weather, main, wind, dt, pop, snow, rain
@@ -45,6 +61,7 @@ struct ForecastInfo: Decodable {
         pop = try container.decode(Double.self, forKey: .pop)
         snow = try container.decodeIfPresent(Volume.self, forKey: .snow)
         rain = try container.decodeIfPresent(Volume.self, forKey: .rain)
+        datetime = DateManager.shared.utcToKst(dt)
     }
 }
 

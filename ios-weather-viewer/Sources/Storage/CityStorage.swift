@@ -14,30 +14,13 @@ final class CityStorage {
     private init() {}
     
     static func load() {
-        let fileName = "CityInfo"
+        guard let cities = JSONManager.shared.load("CityInfo", CitiesInfo.self) else { return }
         
-        guard let path = Bundle.main.path(forResource: fileName, ofType: "json") else {
-            return
-        }
-        
-        guard let jsonString = try? String(contentsOfFile: path) else {
-            return
-        }
-        
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        
-        let data = jsonString.data(using: .utf8)
-        
-        guard let data, let cities = try? decoder.decode(CitiesInfo.self, from: data) else {
-            return
-        }
-        
-        CityStaticStorage.cities = cities
+        CityStaticStorage.cities = cities.cities
     }
     
 }
 
 enum CityStaticStorage {
-    fileprivate(set) static var cities  = CitiesInfo(cities: [CityInfo]())
+    fileprivate(set) static var cities = [CityInfo]()
 }
