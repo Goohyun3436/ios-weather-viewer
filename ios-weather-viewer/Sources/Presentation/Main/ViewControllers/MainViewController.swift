@@ -25,6 +25,7 @@ final class MainViewController: BaseViewController {
         mainView.tableView.delegate = self
         mainView.tableView.dataSource = self
         mainView.tableView.register(IconNLabelTableViewCell.self, forCellReuseIdentifier: IconNLabelTableViewCell.id)
+        mainView.tableView.register(LabelNSubLabelTableViewCell.self, forCellReuseIdentifier: LabelNSubLabelTableViewCell.id)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,7 +56,7 @@ final class MainViewController: BaseViewController {
             self?.title = title
         }
         
-        viewModel.output.mainPresent.lazyBind { [weak self] present in
+        viewModel.output.present.lazyBind { [weak self] present in
             guard let present else {
                 //대응 필요
                 return
@@ -97,6 +98,13 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
             
         case .temp:
+            let cell = tableView.dequeueReusableCell(withIdentifier: LabelNSubLabelTableViewCell.id, for: indexPath) as! LabelNSubLabelTableViewCell
+            
+            if let chatInfo = viewModel.output.present.value?.tempChat {
+                cell.setData(chatInfo)
+            }
+            
+            return cell
             
         case .fellsLikeTemp:
             

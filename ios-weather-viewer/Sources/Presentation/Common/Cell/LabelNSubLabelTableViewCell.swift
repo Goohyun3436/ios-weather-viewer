@@ -1,36 +1,35 @@
 //
-//  IconNLabelTableViewCell.swift
+//  LabelNSubLabelTableViewCell.swift
 //  ios-weather-viewer
 //
 //  Created by Goo on 2/15/25.
 //
 
 import UIKit
-import Kingfisher
 import SnapKit
 
-final class IconNLabelTableViewCell: BaseTableViewCell {
+final class LabelNSubLabelTableViewCell: BaseTableViewCell {
     
     //MARK: - UI Property
     private let bubble = BubbleView(axis: .horizontal)
-    private let leftImageView = UIImageView()
     private let label = AttributedLabel()
+    private let subLabel = UILabel()
     
     //MARK: - Property
-    static let id = "ImageNLabelTableViewCell"
+    static let id = "LabelNSubLabelTableViewCell"
     
     //MARK: - Method
-    func setData(_ chat: IconNLabelChat) {
-        leftImageView.kf.setImage(with: URL(string: chat.image))
+    func setData(_ chat: LabelNSubLabelChat) {
         label.text = chat.text
         label.asFont(chat.targetStrings, font: UIFont.systemFont(ofSize: 14, weight: .bold))
+        subLabel.text = chat.subText
     }
     
     //MARK: - Setup Method
     override func setupUI() {
         contentView.addSubview(bubble)
         
-        [leftImageView, label].forEach {
+        [label, subLabel].forEach {
             bubble.addArrangedSubview($0)
         }
     }
@@ -40,15 +39,12 @@ final class IconNLabelTableViewCell: BaseTableViewCell {
             make.verticalEdges.leading.equalTo(contentView).inset(8)
             make.trailing.lessThanOrEqualTo(contentView).inset(-8)
         }
-        
-        leftImageView.snp.makeConstraints { make in
-            make.size.equalTo(30)
-        }
     }
     
     override func setupAttributes() {
-        label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 14)
+        subLabel.font = UIFont.systemFont(ofSize: 12)
+        subLabel.textColor = UIColor.gray
     }
     
 }
