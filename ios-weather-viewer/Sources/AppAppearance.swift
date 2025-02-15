@@ -19,6 +19,7 @@ final class AppAppearance {
         UINavigationBar.appearance().scrollEdgeAppearance = appearanceN
         
         BaseView.appearance().backgroundColor = UIColor.white
+        BaseTableViewCell.appearance().selectionStyle = .none
     }
     
 }

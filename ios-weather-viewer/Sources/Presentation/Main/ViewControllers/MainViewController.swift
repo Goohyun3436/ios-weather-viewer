@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainViewController: BaseViewController {
+final class MainViewController: BaseViewController {
     
     //MARK: - UI Property
     private let mainView = MainView()
@@ -22,6 +22,9 @@ class MainViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        mainView.tableView.delegate = self
+        mainView.tableView.dataSource = self
+        mainView.tableView.register(ImageNLabelTableViewCell.self, forCellReuseIdentifier: ImageNLabelTableViewCell.id)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,5 +68,30 @@ class MainViewController: BaseViewController {
     @objc private func refreshButtonTapped() {}
     
     @objc private func searchButtonTapped() {}
+    
+}
+
+extension MainViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 12
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: ImageNLabelTableViewCell.id, for: indexPath) as! ImageNLabelTableViewCell
+        cell.backgroundColor = .orange
+        
+        cell.setData(
+            image: WeatherImageRequest.small("02n").endpoint,
+            text: "오늘의 날씨는 맑음입니다.오늘의 날씨는 맑음입니다.오늘의 날씨는 맑음입니다.오늘의 날씨는 맑음입니다.오늘의 날씨는 맑음입니다.",
+            targetStrings: ["맑음"]
+        )
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
     
 }
