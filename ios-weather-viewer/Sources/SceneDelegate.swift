@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: scene)
         
-        window?.rootViewController = UINavigationController(rootViewController: SearchViewController())
+        window?.rootViewController = UINavigationController(rootViewController: MainViewController())
         
         window?.makeKeyAndVisible()
     }
