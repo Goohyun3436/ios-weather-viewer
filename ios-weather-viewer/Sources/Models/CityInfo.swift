@@ -11,7 +11,7 @@ struct CitiesInfo: Decodable {
     let cities: [CityInfo]
 }
 
-struct CityInfo: Decodable {
+struct CityInfo: Codable, Hashable {
     let id: Int
     let city: String
     let koCityName: String
@@ -32,4 +32,17 @@ struct CityInfo: Decodable {
         koCountryName = try container.decode(String.self, forKey: .koCountryName)
         locationName = "\(koCountryName), \(koCityName)"
     }
+    
+    func hash(into hasher: inout Hasher) {
+        return hasher.combine(self.id.hashValue)
+    }
+    
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.hashValue == rhs.hashValue
+    }
+}
+
+struct CityData: Codable {
+    var cityArray: [CityInfo]
+    var citySet: Set<CityInfo>
 }

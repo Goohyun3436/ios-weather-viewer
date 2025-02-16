@@ -19,7 +19,7 @@ final class SearchViewModel: BaseViewModel {
         let navigationTitle = Observable("도시 검색")
         let backButtonTitle = Observable("")
         let searchBarPlaceholder = Observable("지금, 날씨가 궁금한 곳은?")
-        let cities = CityStaticStorage.cities
+        let cities = CityStaticStorage.info.cityArray
         let present: Observable<SearchPresent?> = Observable(nil)
     }
     

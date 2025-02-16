@@ -65,7 +65,7 @@ final class MainViewModel: BaseViewModel {
     }
     
     private func getCity() -> CityInfo? {
-        return CityStaticStorage.cities.first
+        return CityStaticStorage.info.cityArray.first
     }
     
     private func getWeather() -> WeatherResponse? {
