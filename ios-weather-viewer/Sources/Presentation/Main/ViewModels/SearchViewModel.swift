@@ -12,8 +12,9 @@ final class SearchViewModel: BaseViewModel {
     //MARK: - Input
     struct Input {
         let viewDidLoad: Observable<Void?> = Observable(nil)
-        let mainViewTapped: Observable<Void?> = Observable(nil)
         let prefetchRowsAt = Observable([IndexPath]())
+        let didSelectRowAt: Observable<IndexPath?> = Observable(nil)
+        let mainViewTapped: Observable<Void?> = Observable(nil)
     }
     
     //MARK: - Output
@@ -23,6 +24,7 @@ final class SearchViewModel: BaseViewModel {
         let searchBarPlaceholder = Observable("지금, 날씨가 궁금한 곳은?")
         let present = Observable(SearchPresent(cities: []))
         let showsKeyboard = Observable(false)
+        let popVC: Observable<Void?> = Observable(nil)
     }
     
     //MARK: - Private
@@ -59,6 +61,11 @@ final class SearchViewModel: BaseViewModel {
         input.prefetchRowsAt.lazyBind { [weak self] indexPaths in
             print("prefetchRowsAt")
             self?.prefetch(indexPaths)
+        }
+        
+        input.didSelectRowAt.lazyBind { [weak self] indexPath in
+            self?.setUserCity(indexPath)
+            self?.output.popVC.value = ()
         }
         
         input.mainViewTapped.lazyBind { [weak self] _ in
@@ -149,6 +156,13 @@ final class SearchViewModel: BaseViewModel {
                 self.priv.page.value += 1
             }
         }
+    }
+    
+    private func setUserCity(_ indexPath: IndexPath?) {
+        guard let indexPath else { return }
+        
+        let cityId = output.present.value.cities[indexPath.row].id
+        UserStorage.shared.info.cityId = cityId
     }
     
 }

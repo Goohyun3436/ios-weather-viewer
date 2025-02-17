@@ -64,6 +64,10 @@ final class SearchViewController: BaseViewController {
         viewModel.output.showsKeyboard.lazyBind { [weak self] show in
             self?.mainView.endEditing(show)
         }
+        
+        viewModel.output.popVC.lazyBind { [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
+        }
     }
     
     private func setupTableView() {
@@ -89,6 +93,10 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UITa
     
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         viewModel.input.prefetchRowsAt.value = indexPaths
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.input.didSelectRowAt.value = indexPath
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
