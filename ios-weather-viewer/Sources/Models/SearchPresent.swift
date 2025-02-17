@@ -16,6 +16,7 @@ struct CityWeatherInfo {
     let koCityName: String
     let koCountryName: String
     let iconUrl: String
+    let iconPlaceholder: String = "sun.max"
     let tempMinMax: String
     let temp: String
 }

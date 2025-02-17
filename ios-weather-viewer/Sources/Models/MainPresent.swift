@@ -20,7 +20,7 @@ struct MainPresent {
 
 struct IconNLabelChat {
     let image: String
-    let imagePlaceholder: String
+    let imagePlaceholder: String = "sun.max"
     let text: String
     let targetStrings: [String]
 }
@@ -39,7 +39,7 @@ struct LabelChat {
 struct ImageNLabelChat {
     let text: String
     let image: String
-    let imagePlaceholder: String
+    let imagePlaceholder: String = "weather"
 }
 
 enum Chat: CaseIterable {

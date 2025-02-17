@@ -131,7 +131,6 @@ final class MainViewModel: BaseViewModel {
             datetime: weather.datetime,
             weatherChat: IconNLabelChat(
                 image: weather.weather.first?.iconUrl ?? "",
-                imagePlaceholder: "sun.max",
                 text: "오늘의 날씨는 \(weatherDescription) 입니다",
                 targetStrings: [weatherDescription]
             ),
@@ -154,8 +153,7 @@ final class MainViewModel: BaseViewModel {
             ),
             photoChat: ImageNLabelChat(
                 text: "오늘의 사진",
-                image: photo.results.first?.urls.small ?? "",
-                imagePlaceholder: "weather"
+                image: photo.results.first?.urls.small ?? ""
             )
         )
     }

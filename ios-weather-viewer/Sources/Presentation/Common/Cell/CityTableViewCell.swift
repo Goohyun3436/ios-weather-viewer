@@ -27,7 +27,10 @@ final class CityTableViewCell: BaseTableViewCell {
         cityNameLabel.text = data.koCityName
         countryNameLabel.text = data.koCountryName
         tempMinMaxLabel.text = data.tempMinMax
-        iconImageView.kf.setImage(with: URL(string: data.iconUrl))
+        iconImageView.kf.setImage(
+            with: URL(string: data.iconUrl),
+            placeholder: UIImage(systemName: data.iconPlaceholder)
+        )
         tempLabel.text = data.temp
     }
     
@@ -83,6 +86,7 @@ final class CityTableViewCell: BaseTableViewCell {
         countryNameLabel.font = UIFont.systemFont(ofSize: 12)
         tempMinMaxLabel.font = UIFont.systemFont(ofSize: 12)
         iconImageView.contentMode = .scaleAspectFit
+        iconImageView.tintColor = UIColor.black
         tempLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
     }
 }

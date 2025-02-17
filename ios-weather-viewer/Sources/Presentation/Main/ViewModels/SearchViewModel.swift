@@ -139,7 +139,7 @@ final class SearchViewModel: BaseViewModel {
                 id: cities[i].id,
                 koCityName: cities[i].koCityName,
                 koCountryName: cities[i].koCountryName,
-                iconUrl: weatherGroup.list[i].weather.first?.iconUrl ?? "", // nil 처리
+                iconUrl: weatherGroup.list[i].weather.first?.iconUrl ?? "",
                 tempMinMax: "최저 \(Int(weatherGroup.list[i].main.tempMin))° 최고 \(Int(weatherGroup.list[i].main.tempMax))°",
                 temp: "\(weatherGroup.list[i].main.temp)°"
             ))
