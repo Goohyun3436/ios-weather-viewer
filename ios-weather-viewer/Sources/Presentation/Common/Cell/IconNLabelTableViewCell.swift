@@ -22,7 +22,10 @@ final class IconNLabelTableViewCell: BaseTableViewCell {
     
     //MARK: - Method
     func setData(_ chat: IconNLabelChat) {
-        iconImageView.kf.setImage(with: URL(string: chat.image))
+        iconImageView.kf.setImage(
+            with: URL(string: chat.image),
+            placeholder: UIImage(systemName: chat.imagePlaceholder)
+        )
         label.text = chat.text
         label.asFont(chat.targetStrings, font: UIFont.systemFont(ofSize: 14, weight: .bold))
     }
@@ -58,6 +61,7 @@ final class IconNLabelTableViewCell: BaseTableViewCell {
     
     override func setupAttributes() {
         iconImageView.contentMode = .scaleAspectFit
+        iconImageView.tintColor = UIColor.black
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
     }

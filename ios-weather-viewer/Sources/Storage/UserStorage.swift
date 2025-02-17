@@ -13,7 +13,7 @@ final class UserStorage {
     
     private init() {}
     
-    @UserDefaultsJSON(key: .user, empty: UserData(test: true))
+    @UserDefaultsJSON(key: .user, empty: UserData())
     var info {
         didSet {
             UserStaticStorage.info = info
@@ -23,5 +23,5 @@ final class UserStorage {
 }
 
 enum UserStaticStorage {
-    fileprivate(set) static var info = UserData(test: true)
+    fileprivate(set) static var info = UserData()
 }

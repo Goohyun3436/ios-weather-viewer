@@ -8,7 +8,7 @@
 import Foundation
 
 struct SearchPresent {
-    let cities: [CityWeatherInfo]
+    var cities: [CityWeatherInfo]
 }
 
 struct CityWeatherInfo {

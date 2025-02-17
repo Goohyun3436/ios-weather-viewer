@@ -21,8 +21,11 @@ final class ImageNLabelTableViewCell: BaseTableViewCell {
     
     //MARK: - Method
     func setData(_ chat: ImageNLabelChat) {
-        photoImageView.kf.setImage(with: URL(string: chat.image))
         label.text = chat.text
+        photoImageView.kf.setImage(
+            with: URL(string: chat.image),
+            placeholder: UIImage(named: chat.imagePlaceholder)
+        )
     }
     
     //MARK: - Setup Method
@@ -38,11 +41,11 @@ final class ImageNLabelTableViewCell: BaseTableViewCell {
         bubble.snp.makeConstraints { make in
             make.verticalEdges.equalTo(contentView).inset(4)
             make.leading.equalTo(contentView).offset(16)
-            make.trailing.lessThanOrEqualTo(contentView).offset(-16)
+            make.trailing.equalTo(contentView).inset(16)
         }
         
         photoImageView.snp.makeConstraints { make in
-            make.width.equalTo(UIScreen.main.bounds.width - 16)
+            make.width.equalTo(UIScreen.main.bounds.width - 56)
             make.height.equalTo(200)
         }
     }

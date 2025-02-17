@@ -68,7 +68,7 @@ final class MainViewController: BaseViewController {
             
             self?.mainView.locationNameLabel.text = present.locationName
             self?.mainView.datetimeLabel.text = present.datetime
-            
+            self?.mainView.tableView.reloadData()
         }
     }
     

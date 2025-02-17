@@ -8,5 +8,5 @@
 import Foundation
 
 struct UserData: Codable {
-    var test: Bool
+    var cityId: CityId = 1835848
 }

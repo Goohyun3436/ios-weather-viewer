@@ -75,10 +75,16 @@ final class NetworkManager {
             
             do {
                 let value = try decoder.decode(responseT, from: data)
-                completionHandler(value)
+                
+                DispatchQueue.main.async {
+                    completionHandler(value)
+                }
             } catch {
                 print(error)
-                failureHandler()
+                
+                DispatchQueue.main.async {
+                    failureHandler()
+                }
             }
             
         }.resume()

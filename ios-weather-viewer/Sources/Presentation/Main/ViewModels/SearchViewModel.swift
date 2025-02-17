@@ -12,6 +12,7 @@ final class SearchViewModel: BaseViewModel {
     //MARK: - Input
     struct Input {
         let viewDidLoad: Observable<Void?> = Observable(nil)
+        let prefetchRowsAt = Observable([IndexPath]())
     }
     
     //MARK: - Output
@@ -19,12 +20,16 @@ final class SearchViewModel: BaseViewModel {
         let navigationTitle = Observable("도시 검색")
         let backButtonTitle = Observable("")
         let searchBarPlaceholder = Observable("지금, 날씨가 궁금한 곳은?")
-        let cities = CityStaticStorage.info.cityArray
-        let present: Observable<SearchPresent?> = Observable(nil)
+        let present = Observable(SearchPresent(cities: []))
     }
     
     //MARK: - Private
     private struct Private {
+        let page = Observable(0)
+        var perPage = 20
+        let total = CityStaticStorage.info.cityArray.count
+        var isEnd = false
+        let cities = Observable([CityInfo]())
         let weatherGroup: Observable<WeatherGroupResponse?> = Observable(nil)
     }
     
@@ -45,11 +50,30 @@ final class SearchViewModel: BaseViewModel {
     //MARK: - Transform
     func transform() {
         input.viewDidLoad.lazyBind { [weak self] _ in
-            self?.priv.weatherGroup.value = self?.getWeatherGroup()
+            print("viewDidLoad")
+            self?.priv.page.value = 1
+        }
+        
+        input.prefetchRowsAt.lazyBind { [weak self] indexPaths in
+            print("prefetchRowsAt")
+            self?.prefetch(indexPaths)
+        }
+        
+        priv.page.lazyBind { [weak self] page in
+            print("page")
+            self?.getCities(page)
+        }
+        
+        priv.cities.lazyBind { [weak self] cities in
+            print("cities")
+            self?.getWeatherGroup(cities)
         }
         
         priv.weatherGroup.lazyBind { [weak self] weatherGroup in
-            guard let cities = self?.output.cities, let weatherGroup else {
+            print("weatherGroup")
+            guard let cities = self?.priv.cities.value,
+                  let weatherGroup
+            else {
                 // nil 처리
                 return
             }
@@ -58,12 +82,40 @@ final class SearchViewModel: BaseViewModel {
         }
     }
     
-    private func getWeatherGroup() -> WeatherGroupResponse? {
-        // id 20개씩 처리
+    private func getCities(_ page: Int) {
+        guard priv.total > 0 else { return } // error 처리
         
-        let weatherGroup = JSONManager.shared.load("WeatherGroupResponse", WeatherGroupResponse.self)
+        if priv.total < 20 {
+            priv.perPage = priv.total
+        }
         
-        return weatherGroup
+        if priv.total - output.present.value.cities.count < priv.perPage {
+            priv.perPage = priv.total - output.present.value.cities.count
+            priv.isEnd = true
+        }
+        
+        print(#function)
+        print("page: \(page), perPage: \(priv.perPage), isEnd: \(priv.isEnd)")
+        
+        let startIdx = priv.perPage * (priv.page.value - 1)
+        let endIdx = priv.perPage * priv.page.value - 1
+        let cities = Array(CityStaticStorage.info.cityArray[startIdx...endIdx])
+        
+        self.priv.cities.value = cities
+    }
+    
+    private func getWeatherGroup(_ cities: [CityInfo]) {
+        let cityIds = cities.map { $0.id }
+        
+        NetworkManager.shared.request(
+            WeatherRequest.group(cityIds),
+            WeatherGroupResponse.self
+        ) { [weak self] data in
+            self?.priv.weatherGroup.value = data
+        } failureHandler: {
+            // error 처리
+            self.priv.weatherGroup.value = nil // weak self 처리
+        }
     }
     
     private func setPresent(_ cities: [CityInfo], _ weatherGroup: WeatherGroupResponse) {
@@ -80,7 +132,17 @@ final class SearchViewModel: BaseViewModel {
             ))
         }
         
-        self.output.present.value = SearchPresent(cities: cityWeathers)
+        self.output.present.value.cities.append(contentsOf: cityWeathers)
+    }
+    
+    private func prefetch(_ indexPaths: [IndexPath]) {
+        guard !priv.isEnd else { return }
+        
+        indexPaths.forEach {
+            if self.output.present.value.cities.count - 2 == $0.row {
+                self.priv.page.value += 1
+            }
+        }
     }
     
 }

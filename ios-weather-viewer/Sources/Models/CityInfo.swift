@@ -43,6 +43,6 @@ struct CityInfo: Codable, Hashable {
 }
 
 struct CityData: Codable {
-    var cityArray: [CityInfo]
-    var citySet: Set<CityInfo>
+    var cityArray = [CityInfo]()
+    var citySet = Set<CityInfo>()
 }

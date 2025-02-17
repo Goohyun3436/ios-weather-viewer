@@ -24,6 +24,7 @@ final class SearchViewController: BaseViewController {
         super.viewDidLoad()
         mainView.tableView.delegate = self
         mainView.tableView.dataSource = self
+        mainView.tableView.prefetchDataSource = self
         setupTableView()
         viewModel.input.viewDidLoad.value = ()
     }
@@ -45,6 +46,10 @@ final class SearchViewController: BaseViewController {
         viewModel.output.searchBarPlaceholder.bind { [weak self] placeholder in
             self?.mainView.searchBar.placeholder = placeholder
         }
+        
+        viewModel.output.present.lazyBind { [weak self] present in
+            self?.mainView.tableView.reloadData()
+        }
     }
     
     private func setupTableView() {
@@ -53,20 +58,23 @@ final class SearchViewController: BaseViewController {
     
 }
 
-extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
+extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UITableViewDataSourcePrefetching {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.output.cities.count
+        return viewModel.output.present.value.cities.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CityTableViewCell.id, for: indexPath) as! CityTableViewCell
         
-        if let cityWeather = viewModel.output.present.value?.cities[indexPath.row] {
-            cell.setData(cityWeather)
-        }
+        let cityWeather = viewModel.output.present.value.cities[indexPath.row]
+        cell.setData(cityWeather)
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        viewModel.input.prefetchRowsAt.value = indexPaths
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

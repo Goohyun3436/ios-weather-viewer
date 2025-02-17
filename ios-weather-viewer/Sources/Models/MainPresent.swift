@@ -20,6 +20,7 @@ struct MainPresent {
 
 struct IconNLabelChat {
     let image: String
+    let imagePlaceholder: String
     let text: String
     let targetStrings: [String]
 }
@@ -36,8 +37,9 @@ struct LabelChat {
 }
 
 struct ImageNLabelChat {
-    let image: String
     let text: String
+    let image: String
+    let imagePlaceholder: String
 }
 
 enum Chat: CaseIterable {
