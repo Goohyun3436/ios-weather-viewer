@@ -102,6 +102,7 @@ final class MainViewModel: BaseViewModel {
             self?.priv.weather.value = data
         } failureHandler: {
             // error 처리
+//            self?.presentErrorAlert
             self.priv.weather.value = nil // weak self 처리
         }
     }

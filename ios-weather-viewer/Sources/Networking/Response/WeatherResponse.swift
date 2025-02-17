@@ -132,3 +132,64 @@ struct Volume: Decodable {
         case h3 = "3h"
     }
 }
+
+//MARK: - Error
+enum WeatherError: APIError {
+    case bad_request
+    case unauthorized
+    case not_found
+    case too_many_requests
+    case unexpected_error
+    case unowned
+    
+    init(_ statusCode: Int) {
+        switch statusCode {
+        case 400:
+            self = .bad_request
+        case 401:
+            self = .unauthorized
+        case 404:
+            self = .not_found
+        case 429:
+            self = .too_many_requests
+        case 500...599:
+            self = .unexpected_error
+        default:
+            self = .unowned
+        }
+    }
+    
+    var statusCode: String {
+        switch self {
+        case .bad_request:
+            return "400"
+        case .unauthorized:
+            return "401"
+        case .not_found:
+            return "404"
+        case .too_many_requests:
+            return "429"
+        case .unexpected_error:
+            return "500"
+        case .unowned:
+            return "0"
+        }
+    }
+    
+    var message: String {
+        switch self {
+        case .bad_request:
+            return "잘못된 요청입니다."
+        case .unauthorized:
+            return "승인되지 않은 요청입니다."
+        case .not_found:
+            return "리소스가 존재하지 않습니다."
+        case .too_many_requests:
+            return "요청 수가 초과되었습니다."
+        case .unexpected_error:
+            return "Open Weather 서버에 예상치 못한 오류가 발생하였습니다."
+        case .unowned:
+            return "Map Weather 앱에 문제가 발생했습니다."
+        }
+    }
+}

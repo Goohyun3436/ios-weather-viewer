@@ -15,6 +15,8 @@ protocol APIRequest {
     var header: HTTPHeaders? { get }
 }
 
+protocol APIError {}
+
 enum HTTPMethod: String {
     case get = "GET"
 }
@@ -48,11 +50,8 @@ final class NetworkManager {
             }
         }
         
-        print(urlComponents)
-        
         URLSession.shared.dataTask(with: urlRequest) { data, response, err in
             if let err {
-                print("===err===", err)
                 failureHandler()
                 return
             }
@@ -60,8 +59,7 @@ final class NetworkManager {
             guard let response = response as? HTTPURLResponse else { return }
             
             guard (200...299).contains(response.statusCode) else {
-                print("===statusCode===", response.statusCode)
-                print(response)
+//                failureHandler(response.statusCode)
                 failureHandler()
                 return
             }
