@@ -12,6 +12,8 @@ final class MainViewModel: BaseViewModel {
     //MARK: - Input
     struct Input {
         let viewWillAppear: Observable<Void?> = Observable(nil)
+        let refreshButtonTapped: Observable<Void?> = Observable(nil)
+        let searchButtonTapped: Observable<Void?> = Observable(nil)
     }
     
     //MARK: - Output
@@ -25,6 +27,7 @@ final class MainViewModel: BaseViewModel {
         ))
         let chatCases = Chat.allCases
         let present: Observable<MainPresent?> = Observable(nil)
+        let pushVC: Observable<Void?> = Observable(nil)
     }
     
     //MARK: - Private
@@ -53,6 +56,14 @@ final class MainViewModel: BaseViewModel {
     func transform() {
         input.viewWillAppear.lazyBind { [weak self] _ in
             self?.getCity()
+        }
+        
+        input.refreshButtonTapped.lazyBind { [weak self] _ in
+            self?.getWeather(self?.priv.city.value)
+        }
+        
+        input.searchButtonTapped.lazyBind { [weak self] _ in
+            self?.output.pushVC.value = ()
         }
         
         priv.city.lazyBind { [weak self] city in
@@ -120,7 +131,6 @@ final class MainViewModel: BaseViewModel {
             datetime: weather.datetime,
             weatherChat: IconNLabelChat(
                 image: weather.weather.first?.iconUrl ?? "",
-                imagePlaceholder: "sun.max",
                 text: "오늘의 날씨는 \(weatherDescription) 입니다",
                 targetStrings: [weatherDescription]
             ),
@@ -143,8 +153,7 @@ final class MainViewModel: BaseViewModel {
             ),
             photoChat: ImageNLabelChat(
                 text: "오늘의 사진",
-                image: photo.results.first?.urls.small ?? "",
-                imagePlaceholder: "weather"
+                image: photo.results.first?.urls.small ?? ""
             )
         )
     }

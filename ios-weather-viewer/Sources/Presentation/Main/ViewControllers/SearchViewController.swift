@@ -25,13 +25,20 @@ final class SearchViewController: BaseViewController {
         mainView.tableView.delegate = self
         mainView.tableView.dataSource = self
         mainView.tableView.prefetchDataSource = self
+        mainView.searchBar.delegate = self
         setupTableView()
         viewModel.input.viewDidLoad.value = ()
     }
     
     //MARK: - Setup Method
     override func setupActions() {
-        
+        let singleTap = UITapGestureRecognizer(
+            target: self,
+            action: #selector(mainViewTapped)
+        )
+        singleTap.cancelsTouchesInView = false
+        mainView.isUserInteractionEnabled = true
+        mainView.addGestureRecognizer(singleTap)
     }
     
     override func setupBinds() {
@@ -47,8 +54,42 @@ final class SearchViewController: BaseViewController {
             self?.mainView.searchBar.placeholder = placeholder
         }
         
+        viewModel.output.cancelButtonTitle.bind { [weak self] title in
+            self?.mainView.searchBar.setValue(title, forKey: "cancelButtonText")
+        }
+        
+        viewModel.output.noneContentText.bind { [weak self] text in
+            self?.mainView.noneContentLabel.text = text
+        }
+        
+        viewModel.output.searchBarText.lazyBind { [weak self] text in
+            guard let searchBar = self?.mainView.searchBar else { return }
+            searchBar.text = text
+            searchBar.delegate?.searchBar?(searchBar, textDidChange: text ?? "")
+        }
+        
+        viewModel.output.showsKeyboard.lazyBind { [weak self] show in
+            self?.mainView.endEditing(show)
+        }
+        
+        viewModel.output.showsCancelButton.lazyBind { [weak self] shows in
+            self?.mainView.searchBar.setShowsCancelButton(shows, animated: true)
+        }
+        
+        viewModel.output.showsNoneContentLabel.bind { [weak self] show in
+            self?.mainView.noneContentLabel.isHidden = !show
+        }
+        
+        viewModel.output.showsTableView.bind { [weak self] show in
+            self?.mainView.tableView.isHidden = !show
+        }
+        
         viewModel.output.present.lazyBind { [weak self] present in
             self?.mainView.tableView.reloadData()
+        }
+        
+        viewModel.output.popVC.lazyBind { [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
         }
     }
     
@@ -56,8 +97,14 @@ final class SearchViewController: BaseViewController {
         mainView.tableView.register(CityTableViewCell.self, forCellReuseIdentifier: CityTableViewCell.id)
     }
     
+    //MARK: - Method
+    @objc private func mainViewTapped() {
+        viewModel.input.mainViewTapped.value = ()
+    }
+    
 }
 
+//MARK: - UITableViewDelegate
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UITableViewDataSourcePrefetching {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -77,8 +124,24 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UITa
         viewModel.input.prefetchRowsAt.value = indexPaths
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.input.didSelectRowAt.value = indexPath
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
     
+}
+
+//MARK: - UISearchBarDelegate
+extension SearchViewController: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        viewModel.input.queryDidChange.value = searchText
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        viewModel.input.searchBarSearchButtonClicked.value = ()
+    }
 }

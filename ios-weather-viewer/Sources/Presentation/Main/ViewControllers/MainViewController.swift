@@ -70,6 +70,10 @@ final class MainViewController: BaseViewController {
             self?.mainView.datetimeLabel.text = present.datetime
             self?.mainView.tableView.reloadData()
         }
+        
+        viewModel.output.pushVC.lazyBind { [weak self] _ in
+            self?.navigationController?.pushViewController(SearchViewController(), animated: true)
+        }
     }
     
     private func setupTableView() {
@@ -80,9 +84,13 @@ final class MainViewController: BaseViewController {
     }
     
     //MARK: - Method
-    @objc private func refreshButtonTapped() {}
+    @objc private func refreshButtonTapped() {
+        viewModel.input.refreshButtonTapped.value = ()
+    }
     
-    @objc private func searchButtonTapped() {}
+    @objc private func searchButtonTapped() {
+        viewModel.input.searchButtonTapped.value = ()
+    }
     
 }
 
