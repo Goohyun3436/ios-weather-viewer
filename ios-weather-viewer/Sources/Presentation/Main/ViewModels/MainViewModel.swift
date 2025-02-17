@@ -12,6 +12,7 @@ final class MainViewModel: BaseViewModel {
     //MARK: - Input
     struct Input {
         let viewWillAppear: Observable<Void?> = Observable(nil)
+        let searchButtonTapped: Observable<Void?> = Observable(nil)
     }
     
     //MARK: - Output
@@ -25,6 +26,7 @@ final class MainViewModel: BaseViewModel {
         ))
         let chatCases = Chat.allCases
         let present: Observable<MainPresent?> = Observable(nil)
+        let pushVC: Observable<Void?> = Observable(nil)
     }
     
     //MARK: - Private
@@ -53,6 +55,10 @@ final class MainViewModel: BaseViewModel {
     func transform() {
         input.viewWillAppear.lazyBind { [weak self] _ in
             self?.getCity()
+        }
+        
+        input.searchButtonTapped.lazyBind { [weak self] _ in
+            self?.output.pushVC.value = ()
         }
         
         priv.city.lazyBind { [weak self] city in
