@@ -8,10 +8,11 @@
 import Foundation
 
 struct WeatherGroupResponse: Decodable {
-    let list: [WeatherResponse]
+    var list: [WeatherResponse]
 }
 
-struct WeatherResponse: Decodable {
+struct WeatherResponse: Decodable, Hashable {
+    let id: CityId
     let weather: [WeatherInfo]
     let main: MainInfo
     let wind: WindInfo
@@ -20,17 +21,26 @@ struct WeatherResponse: Decodable {
     let datetime: String
     
     enum CodingKeys: String, CodingKey {
-        case weather, main, wind, dt, sys
+        case id, weather, main, wind, dt, sys
     }
     
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(CityId.self, forKey: .id)
         weather = try container.decode([WeatherInfo].self, forKey: .weather)
         main = try container.decode(MainInfo.self, forKey: .main)
         wind = try container.decode(WindInfo.self, forKey: .wind)
         dt = try container.decode(Int.self, forKey: .dt)
         sys = try container.decode(SysInfo.self, forKey: .sys)
         datetime = DateManager.shared.utcToKst(dt, for: .datetime)
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        return hasher.combine(self.id.hashValue)
+    }
+    
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.hashValue == rhs.hashValue
     }
 }
 

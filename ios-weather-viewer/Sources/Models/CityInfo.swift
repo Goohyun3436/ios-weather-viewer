@@ -12,7 +12,7 @@ struct CitiesInfo: Decodable {
 }
 
 struct CityInfo: Codable, Hashable {
-    let id: Int
+    let id: CityId
     let city: String
     let koCityName: String
     let country: String

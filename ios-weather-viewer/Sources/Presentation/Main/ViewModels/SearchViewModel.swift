@@ -12,13 +12,13 @@ final class SearchViewModel: BaseViewModel {
     //MARK: - Input
     struct Input {
         let viewDidLoad: Observable<Void?> = Observable(nil)
+        let mainViewTapped: Observable<Void?> = Observable(nil)
         let searchBarShouldBeginEditing: Observable<Void?> = Observable(nil)
         let searchBarCancelButtonClicked: Observable<Void?> = Observable(nil)
         let searchBarSearchButtonClicked: Observable<Void?> = Observable(nil)
         let queryDidChange: Observable<String?> = Observable(nil)
         let prefetchRowsAt = Observable([IndexPath]())
         let didSelectRowAt: Observable<IndexPath?> = Observable(nil)
-        let mainViewTapped: Observable<Void?> = Observable(nil)
     }
     
     //MARK: - Output
@@ -41,6 +41,7 @@ final class SearchViewModel: BaseViewModel {
         var isEnd = false
         let cities = Observable([CityInfo]())
         let weatherGroup: Observable<WeatherGroupResponse?> = Observable(nil)
+        var backupCityWeatherGroup = Set<WeatherResponse>()
     }
     
     //MARK: - Property
@@ -64,6 +65,10 @@ final class SearchViewModel: BaseViewModel {
             self?.priv.page.value = 1
         }
         
+        input.mainViewTapped.lazyBind { [weak self] _ in
+            self?.output.showsKeyboard.value = false
+        }
+        
         input.searchBarShouldBeginEditing.lazyBind { [weak self] _ in
             self?.output.showsCancelButton.value = true
         }
@@ -79,8 +84,8 @@ final class SearchViewModel: BaseViewModel {
             self?.output.showsCancelButton.value = false
         }
         
-        input.queryDidChange.lazyBind { query in
-            print(query)
+        input.queryDidChange.lazyBind { [weak self] query in
+            self?.getFilteredCities(query)
         }
         
         input.prefetchRowsAt.lazyBind { [weak self] indexPaths in
@@ -91,10 +96,6 @@ final class SearchViewModel: BaseViewModel {
         input.didSelectRowAt.lazyBind { [weak self] indexPath in
             self?.setUserCity(indexPath)
             self?.output.popVC.value = ()
-        }
-        
-        input.mainViewTapped.lazyBind { [weak self] _ in
-            self?.output.showsKeyboard.value = false
         }
         
         priv.page.lazyBind { [weak self] page in
@@ -118,6 +119,22 @@ final class SearchViewModel: BaseViewModel {
             
             self?.setPresent(cities, weatherGroup)
         }
+    }
+    
+    private func getFilteredCities(_ query: Query?) {
+        guard let query else { return }
+        
+        let filtered = CityStaticStorage.info.citySet.filter {
+            $0.koCityName.contains(query) ||
+            $0.koCountryName.contains(query) ||
+            $0.city.contains(query) ||
+            $0.country.contains(query)
+        }
+        
+        print("query: \(query), \(filtered.count)/\(CityStaticStorage.info.citySet.count)")
+        print("==================")
+        print(filtered)
+        print("==================")
     }
     
     private func getCities(_ page: Int) {
@@ -145,17 +162,48 @@ final class SearchViewModel: BaseViewModel {
     }
     
     private func getWeatherGroup(_ cities: [CityInfo]) {
-        let cityIds = cities.map { $0.id }
-        print(cityIds)
+        var cityIdSet = Set<CityId>()
         
+        cities.forEach {
+            cityIdSet.insert($0.id)
+        }
+        
+        print("before(\(cityIdSet.count)): \(cityIdSet)")
+        
+        // 분기
+        var exceptionCityIds = [Int]()
+        var weatherGroup: WeatherGroupResponse? = WeatherGroupResponse(list: [])
+        
+        for id in cityIdSet {
+            if let backup = self.priv.backupCityWeatherGroup.first(where: { $0.id == id }) {
+                exceptionCityIds.append(id)
+                weatherGroup?.list.append(backup)
+            }
+        }
+        
+        let cityIds = Array(cityIdSet.subtracting(exceptionCityIds))
+        
+        print("after(\(cityIds.count)): \(cityIds)")
+        
+        let group = DispatchGroup()
+        
+        group.enter()
         NetworkManager.shared.request(
             WeatherRequest.group(cityIds),
             WeatherGroupResponse.self
-        ) { [weak self] data in
-            self?.priv.weatherGroup.value = data
+        ) { data in
+            weatherGroup?.list.append(contentsOf: data.list)
+            group.leave()
         } failureHandler: {
             // error 처리
-            self.priv.weatherGroup.value = nil // weak self 처리
+            weatherGroup = nil // weak self 처리
+            group.leave()
+        }
+        
+        group.notify(queue: .main) {
+            let sorted = weatherGroup?.list.sorted { $0.id < $1.id } ?? []
+            weatherGroup?.list = sorted
+            self.priv.weatherGroup.value = weatherGroup
         }
     }
     
