@@ -13,10 +13,8 @@ final class SearchViewModel: BaseViewModel {
     struct Input {
         let viewDidLoad: Observable<Void?> = Observable(nil)
         let mainViewTapped: Observable<Void?> = Observable(nil)
-        let searchBarShouldBeginEditing: Observable<Void?> = Observable(nil)
-        let searchBarCancelButtonClicked: Observable<Void?> = Observable(nil)
         let searchBarSearchButtonClicked: Observable<Void?> = Observable(nil)
-        let queryDidChange: Observable<String?> = Observable(nil)
+        let queryDidChange: Observable<Query?> = Observable(nil)
         let prefetchRowsAt = Observable([IndexPath]())
         let didSelectRowAt: Observable<IndexPath?> = Observable(nil)
     }
@@ -27,6 +25,7 @@ final class SearchViewModel: BaseViewModel {
         let backButtonTitle = Observable("")
         let searchBarPlaceholder = Observable("지금, 날씨가 궁금한 곳은?")
         let cancelButtonTitle = Observable("취소")
+        let searchBarText: Observable<String?> = Observable(nil)
         let present = Observable(SearchPresent(cities: []))
         let showsKeyboard = Observable(false)
         let showsCancelButton = Observable(false)
@@ -67,19 +66,8 @@ final class SearchViewModel: BaseViewModel {
             self?.output.showsKeyboard.value = false
         }
         
-        input.searchBarShouldBeginEditing.lazyBind { [weak self] _ in
-            self?.output.showsCancelButton.value = true
-        }
-        
-        input.searchBarCancelButtonClicked.lazyBind { [weak self] _ in
-            self?.output.showsKeyboard.value = false
-            self?.output.showsCancelButton.value = false
-//            self?.input.query.value = nil
-        }
-        
         input.searchBarSearchButtonClicked.lazyBind { [weak self] query in
             self?.output.showsKeyboard.value = false
-            self?.output.showsCancelButton.value = false
         }
         
         input.queryDidChange.lazyBind { [weak self] query in
@@ -123,9 +111,7 @@ final class SearchViewModel: BaseViewModel {
     }
     
     private func getFilteredCities(_ query: Query?) {
-        guard let query else { return }
-        
-        guard !query.isEmpty else {
+        guard let query, !query.isEmpty else {
             self.priv.total = CityStaticStorage.info.cityArray
             return
         }
@@ -166,8 +152,8 @@ final class SearchViewModel: BaseViewModel {
         NetworkManager.shared.request(
             WeatherRequest.group(cityIds),
             WeatherGroupResponse.self
-        ) { data in
-            self.priv.weatherGroup.value = data
+        ) { [weak self] data in
+            self?.priv.weatherGroup.value = data
         } failureHandler: {
             // error 처리
             self.priv.weatherGroup.value = nil // weak self 처리
@@ -178,6 +164,10 @@ final class SearchViewModel: BaseViewModel {
         var cityWeathers = [CityWeatherInfo]()
         
         for i in weatherGroup.list.indices {
+            if self.output.present.value.cities.first(where: { $0.id == cities[i].id }) != nil {
+                continue
+            }
+            
             cityWeathers.append(CityWeatherInfo(
                 id: cities[i].id,
                 koCityName: cities[i].koCityName,

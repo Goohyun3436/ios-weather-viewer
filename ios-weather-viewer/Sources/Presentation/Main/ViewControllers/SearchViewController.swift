@@ -62,6 +62,12 @@ final class SearchViewController: BaseViewController {
             self?.mainView.searchBar.setValue(title, forKey: "cancelButtonText")
         }
         
+        viewModel.output.searchBarText.lazyBind { [weak self] text in
+            guard let searchBar = self?.mainView.searchBar else { return }
+            searchBar.text = text
+            searchBar.delegate?.searchBar?(searchBar, textDidChange: text ?? "")
+        }
+        
         viewModel.output.present.lazyBind { [weak self] present in
             self?.mainView.tableView.reloadData()
         }
@@ -117,14 +123,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UITa
 
 //MARK: - UISearchBarDelegate
 extension SearchViewController: UISearchBarDelegate {
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        viewModel.input.searchBarShouldBeginEditing.value = ()
-        return true
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        viewModel.input.searchBarCancelButtonClicked.value = ()
-    }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         viewModel.input.queryDidChange.value = searchText
