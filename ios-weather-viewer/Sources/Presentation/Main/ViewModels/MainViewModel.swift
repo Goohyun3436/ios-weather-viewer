@@ -12,6 +12,7 @@ final class MainViewModel: BaseViewModel {
     //MARK: - Input
     struct Input {
         let viewWillAppear: Observable<Void?> = Observable(nil)
+        let refreshButtonTapped: Observable<Void?> = Observable(nil)
         let searchButtonTapped: Observable<Void?> = Observable(nil)
     }
     
@@ -55,6 +56,10 @@ final class MainViewModel: BaseViewModel {
     func transform() {
         input.viewWillAppear.lazyBind { [weak self] _ in
             self?.getCity()
+        }
+        
+        input.refreshButtonTapped.lazyBind { [weak self] _ in
+            self?.getWeather(self?.priv.city.value)
         }
         
         input.searchButtonTapped.lazyBind { [weak self] _ in

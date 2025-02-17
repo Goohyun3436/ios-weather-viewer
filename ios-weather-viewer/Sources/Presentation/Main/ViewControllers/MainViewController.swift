@@ -85,7 +85,7 @@ final class MainViewController: BaseViewController {
     
     //MARK: - Method
     @objc private func refreshButtonTapped() {
-        
+        viewModel.input.refreshButtonTapped.value = ()
     }
     
     @objc private func searchButtonTapped() {
