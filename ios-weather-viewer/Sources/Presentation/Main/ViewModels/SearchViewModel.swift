@@ -12,6 +12,9 @@ final class SearchViewModel: BaseViewModel {
     //MARK: - Input
     struct Input {
         let viewDidLoad: Observable<Void?> = Observable(nil)
+        let searchBarShouldBeginEditing: Observable<Void?> = Observable(nil)
+        let searchBarCancelButtonClicked: Observable<Void?> = Observable(nil)
+        let searchBarSearchButtonClicked: Observable<Void?> = Observable(nil)
         let prefetchRowsAt = Observable([IndexPath]())
         let didSelectRowAt: Observable<IndexPath?> = Observable(nil)
         let mainViewTapped: Observable<Void?> = Observable(nil)
@@ -22,8 +25,10 @@ final class SearchViewModel: BaseViewModel {
         let navigationTitle = Observable("도시 검색")
         let backButtonTitle = Observable("")
         let searchBarPlaceholder = Observable("지금, 날씨가 궁금한 곳은?")
+        let cancelButtonTitle = Observable("취소")
         let present = Observable(SearchPresent(cities: []))
         let showsKeyboard = Observable(false)
+        let showsCancelButton = Observable(false)
         let popVC: Observable<Void?> = Observable(nil)
     }
     
@@ -56,6 +61,21 @@ final class SearchViewModel: BaseViewModel {
         input.viewDidLoad.lazyBind { [weak self] _ in
             print("viewDidLoad")
             self?.priv.page.value = 1
+        }
+        
+        input.searchBarShouldBeginEditing.lazyBind { [weak self] _ in
+            self?.output.showsCancelButton.value = true
+        }
+        
+        input.searchBarCancelButtonClicked.lazyBind { [weak self] _ in
+            self?.output.showsKeyboard.value = false
+            self?.output.showsCancelButton.value = false
+//            self?.input.query.value = nil
+        }
+        
+        input.searchBarSearchButtonClicked.lazyBind { [weak self] query in
+            self?.output.showsKeyboard.value = false
+            self?.output.showsCancelButton.value = false
         }
         
         input.prefetchRowsAt.lazyBind { [weak self] indexPaths in

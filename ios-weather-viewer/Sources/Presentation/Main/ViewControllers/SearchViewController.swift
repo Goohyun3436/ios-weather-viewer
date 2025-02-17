@@ -25,6 +25,7 @@ final class SearchViewController: BaseViewController {
         mainView.tableView.delegate = self
         mainView.tableView.dataSource = self
         mainView.tableView.prefetchDataSource = self
+        mainView.searchBar.delegate = self
         setupTableView()
         viewModel.input.viewDidLoad.value = ()
     }
@@ -57,12 +58,20 @@ final class SearchViewController: BaseViewController {
             self?.mainView.searchBar.placeholder = placeholder
         }
         
+        viewModel.output.cancelButtonTitle.bind { [weak self] title in
+            self?.mainView.searchBar.setValue(title, forKey: "cancelButtonText")
+        }
+        
         viewModel.output.present.lazyBind { [weak self] present in
             self?.mainView.tableView.reloadData()
         }
         
         viewModel.output.showsKeyboard.lazyBind { [weak self] show in
             self?.mainView.endEditing(show)
+        }
+        
+        viewModel.output.showsCancelButton.lazyBind { [weak self] shows in
+            self?.mainView.searchBar.setShowsCancelButton(shows, animated: true)
         }
         
         viewModel.output.popVC.lazyBind { [weak self] _ in
@@ -76,6 +85,7 @@ final class SearchViewController: BaseViewController {
     
 }
 
+//MARK: - UITableViewDelegate
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UITableViewDataSourcePrefetching {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -103,4 +113,24 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UITa
         return UITableView.automaticDimension
     }
     
+}
+
+//MARK: - UISearchBarDelegate
+extension SearchViewController: UISearchBarDelegate {
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        viewModel.input.searchBarShouldBeginEditing.value = ()
+        return true
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        viewModel.input.searchBarCancelButtonClicked.value = ()
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print(searchText)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        viewModel.input.searchBarSearchButtonClicked.value = ()
+    }
 }
