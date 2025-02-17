@@ -12,6 +12,7 @@ final class SearchViewModel: BaseViewModel {
     //MARK: - Input
     struct Input {
         let viewDidLoad: Observable<Void?> = Observable(nil)
+        let mainViewTapped: Observable<Void?> = Observable(nil)
         let prefetchRowsAt = Observable([IndexPath]())
     }
     
@@ -21,6 +22,7 @@ final class SearchViewModel: BaseViewModel {
         let backButtonTitle = Observable("")
         let searchBarPlaceholder = Observable("지금, 날씨가 궁금한 곳은?")
         let present = Observable(SearchPresent(cities: []))
+        let showsKeyboard = Observable(false)
     }
     
     //MARK: - Private
@@ -57,6 +59,10 @@ final class SearchViewModel: BaseViewModel {
         input.prefetchRowsAt.lazyBind { [weak self] indexPaths in
             print("prefetchRowsAt")
             self?.prefetch(indexPaths)
+        }
+        
+        input.mainViewTapped.lazyBind { [weak self] _ in
+            self?.output.showsKeyboard.value = false
         }
         
         priv.page.lazyBind { [weak self] page in

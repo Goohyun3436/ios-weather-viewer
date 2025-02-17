@@ -35,6 +35,7 @@ final class SearchView: BaseView {
     
     override func setupAttributes() {
         searchBar.searchBarStyle = .minimal
+        tableView.keyboardDismissMode = .onDrag
     }
     
 }

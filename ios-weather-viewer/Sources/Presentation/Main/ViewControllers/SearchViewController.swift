@@ -31,7 +31,17 @@ final class SearchViewController: BaseViewController {
     
     //MARK: - Setup Method
     override func setupActions() {
-        
+        let singleTap = UITapGestureRecognizer(
+            target: self,
+            action: #selector(mainViewTapped)
+        )
+        singleTap.cancelsTouchesInView = false
+        mainView.isUserInteractionEnabled = true
+        mainView.addGestureRecognizer(singleTap)
+    }
+    
+    @objc private func mainViewTapped() {
+        viewModel.input.mainViewTapped.value = ()
     }
     
     override func setupBinds() {
@@ -49,6 +59,10 @@ final class SearchViewController: BaseViewController {
         
         viewModel.output.present.lazyBind { [weak self] present in
             self?.mainView.tableView.reloadData()
+        }
+        
+        viewModel.output.showsKeyboard.lazyBind { [weak self] show in
+            self?.mainView.endEditing(show)
         }
     }
     
