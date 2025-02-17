@@ -51,7 +51,10 @@ final class SearchViewController: BaseViewController {
         }
         
         viewModel.output.searchBarPlaceholder.bind { [weak self] placeholder in
-            self?.mainView.searchBar.placeholder = placeholder
+            self?.mainView.searchBar.searchTextField.attributedPlaceholder = NSAttributedString(
+                string: placeholder,
+                attributes: [.foregroundColor : UIColor.gray]
+            )
         }
         
         viewModel.output.cancelButtonTitle.bind { [weak self] title in

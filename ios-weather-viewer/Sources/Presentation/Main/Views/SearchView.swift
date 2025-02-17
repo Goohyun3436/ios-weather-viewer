@@ -41,6 +41,8 @@ final class SearchView: BaseView {
     
     override func setupAttributes() {
         searchBar.searchBarStyle = .minimal
+        searchBar.setImage(UIImage(systemName: "xmark.circle.fill"), for: .clear, state: .normal)
+        searchBar.searchTextField.leftView?.tintColor = UIColor.lightGray
         tableView.keyboardDismissMode = .onDrag
         noneContentLabel.font = UIFont.systemFont(ofSize: 14)
     }

@@ -18,7 +18,9 @@ class BaseTableViewCell: UITableViewCell {
     
     func setupUI() {}
     func setupConstraints() {}
-    func setupAttributes() {}
+    func setupAttributes() {
+        contentView.backgroundColor = UIColor.white
+    }
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {

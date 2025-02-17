@@ -18,11 +18,22 @@ final class AppAppearance {
         UINavigationBar.appearance().standardAppearance = appearanceN
         UINavigationBar.appearance().scrollEdgeAppearance = appearanceN
         
+        UIBarButtonItem.appearance().tintColor = UIColor.black
+        
         BaseView.appearance().backgroundColor = UIColor.white
         BaseTableViewCell.appearance().selectionStyle = .none
+        BaseTableViewCell.appearance().backgroundColor = UIColor.white
+        
+        UILabel.appearance().textColor = UIColor.black
+        
+        UISearchBar.appearance().barTintColor = UIColor.white
+        UISearchBar.appearance().keyboardAppearance = UIKeyboardAppearance.light
+        UISearchTextField.appearance().tintColor = UIColor.lightGray
+        UISearchTextField.appearance().textColor = UIColor.black
         
         UITableView.appearance().bounces = false
         UITableView.appearance().separatorStyle = .none
+        UITableView.appearance().backgroundColor = UIColor.white
     }
     
 }
