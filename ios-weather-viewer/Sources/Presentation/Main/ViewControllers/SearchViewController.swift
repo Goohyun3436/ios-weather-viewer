@@ -127,7 +127,7 @@ extension SearchViewController: UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchText)
+        viewModel.input.queryDidChange.value = searchText
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

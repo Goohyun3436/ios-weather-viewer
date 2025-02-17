@@ -37,7 +37,7 @@ final class CityStorage {
         
         var cityData = CityData(cityArray: [CityInfo](), citySet: Set<CityInfo>())
         
-        cityData.cityArray = cityInfo.cities
+        cityData.cityArray = cityInfo.cities.sorted { $0.id < $1.id }
         
         cityInfo.cities.forEach {
             cityData.citySet.insert($0)

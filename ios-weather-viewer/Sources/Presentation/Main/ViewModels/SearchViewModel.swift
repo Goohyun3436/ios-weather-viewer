@@ -15,6 +15,7 @@ final class SearchViewModel: BaseViewModel {
         let searchBarShouldBeginEditing: Observable<Void?> = Observable(nil)
         let searchBarCancelButtonClicked: Observable<Void?> = Observable(nil)
         let searchBarSearchButtonClicked: Observable<Void?> = Observable(nil)
+        let queryDidChange: Observable<String?> = Observable(nil)
         let prefetchRowsAt = Observable([IndexPath]())
         let didSelectRowAt: Observable<IndexPath?> = Observable(nil)
         let mainViewTapped: Observable<Void?> = Observable(nil)
@@ -78,6 +79,10 @@ final class SearchViewModel: BaseViewModel {
             self?.output.showsCancelButton.value = false
         }
         
+        input.queryDidChange.lazyBind { query in
+            print(query)
+        }
+        
         input.prefetchRowsAt.lazyBind { [weak self] indexPaths in
             print("prefetchRowsAt")
             self?.prefetch(indexPaths)
@@ -130,15 +135,18 @@ final class SearchViewModel: BaseViewModel {
         print(#function)
         print("page: \(page), perPage: \(priv.perPage), isEnd: \(priv.isEnd)")
         
-        let startIdx = priv.perPage * (priv.page.value - 1)
-        let endIdx = priv.perPage * priv.page.value - 1
+        let startIdx = output.present.value.cities.count
+        let endIdx = startIdx + priv.perPage - 1
         let cities = Array(CityStaticStorage.info.cityArray[startIdx...endIdx])
+        
+        print("start: \(startIdx), end: \(endIdx)")
         
         self.priv.cities.value = cities
     }
     
     private func getWeatherGroup(_ cities: [CityInfo]) {
         let cityIds = cities.map { $0.id }
+        print(cityIds)
         
         NetworkManager.shared.request(
             WeatherRequest.group(cityIds),
