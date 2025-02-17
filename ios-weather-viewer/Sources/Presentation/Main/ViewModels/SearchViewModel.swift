@@ -35,13 +35,12 @@ final class SearchViewModel: BaseViewModel {
     
     //MARK: - Private
     private struct Private {
+        var total = CityStaticStorage.info.cityArray
         let page = Observable(0)
         var perPage = 20
-        let total = CityStaticStorage.info.cityArray.count
         var isEnd = false
         let cities = Observable([CityInfo]())
         let weatherGroup: Observable<WeatherGroupResponse?> = Observable(nil)
-        var backupCityWeatherGroup = Set<WeatherResponse>()
     }
     
     //MARK: - Property
@@ -61,7 +60,6 @@ final class SearchViewModel: BaseViewModel {
     //MARK: - Transform
     func transform() {
         input.viewDidLoad.lazyBind { [weak self] _ in
-            print("viewDidLoad")
             self?.priv.page.value = 1
         }
         
@@ -85,11 +83,16 @@ final class SearchViewModel: BaseViewModel {
         }
         
         input.queryDidChange.lazyBind { [weak self] query in
+            self?.output.present.value.cities = []
+            self?.priv.total = CityStaticStorage.info.cityArray
+            self?.priv.perPage = 20
+            self?.priv.isEnd = false
+            self?.priv.weatherGroup.value = nil
             self?.getFilteredCities(query)
+            self?.priv.page.value = 1
         }
         
         input.prefetchRowsAt.lazyBind { [weak self] indexPaths in
-            print("prefetchRowsAt")
             self?.prefetch(indexPaths)
         }
         
@@ -99,19 +102,17 @@ final class SearchViewModel: BaseViewModel {
         }
         
         priv.page.lazyBind { [weak self] page in
-            print("page")
             self?.getCities(page)
         }
         
         priv.cities.lazyBind { [weak self] cities in
-            print("cities")
             self?.getWeatherGroup(cities)
         }
         
         priv.weatherGroup.lazyBind { [weak self] weatherGroup in
-            print("weatherGroup")
             guard let cities = self?.priv.cities.value,
-                  let weatherGroup
+                  let weatherGroup,
+                  cities.count == weatherGroup.list.count
             else {
                 // nil 처리
                 return
@@ -124,6 +125,11 @@ final class SearchViewModel: BaseViewModel {
     private func getFilteredCities(_ query: Query?) {
         guard let query else { return }
         
+        guard !query.isEmpty else {
+            self.priv.total = CityStaticStorage.info.cityArray
+            return
+        }
+        
         let filtered = CityStaticStorage.info.citySet.filter {
             $0.koCityName.contains(query) ||
             $0.koCountryName.contains(query) ||
@@ -131,79 +137,40 @@ final class SearchViewModel: BaseViewModel {
             $0.country.contains(query)
         }
         
-        print("query: \(query), \(filtered.count)/\(CityStaticStorage.info.citySet.count)")
-        print("==================")
-        print(filtered)
-        print("==================")
+        self.priv.total = Array(filtered)
     }
     
     private func getCities(_ page: Int) {
-        guard priv.total > 0 else { return } // error 처리
+        guard page > 0 else { return }
+        guard priv.total.count > 0 else { return } // error 처리
         
-        if priv.total < 20 {
-            priv.perPage = priv.total
+        if priv.total.count < 20 {
+            priv.perPage = priv.total.count
         }
         
-        if priv.total - output.present.value.cities.count < priv.perPage {
-            priv.perPage = priv.total - output.present.value.cities.count
+        if priv.total.count - output.present.value.cities.count < priv.perPage {
+            priv.perPage = priv.total.count - output.present.value.cities.count
             priv.isEnd = true
         }
         
-        print(#function)
-        print("page: \(page), perPage: \(priv.perPage), isEnd: \(priv.isEnd)")
-        
         let startIdx = output.present.value.cities.count
         let endIdx = startIdx + priv.perPage - 1
-        let cities = Array(CityStaticStorage.info.cityArray[startIdx...endIdx])
-        
-        print("start: \(startIdx), end: \(endIdx)")
+        let cities = Array(priv.total[startIdx...endIdx])
         
         self.priv.cities.value = cities
     }
     
     private func getWeatherGroup(_ cities: [CityInfo]) {
-        var cityIdSet = Set<CityId>()
+        let cityIds = cities.map { $0.id }
         
-        cities.forEach {
-            cityIdSet.insert($0.id)
-        }
-        
-        print("before(\(cityIdSet.count)): \(cityIdSet)")
-        
-        // 분기
-        var exceptionCityIds = [Int]()
-        var weatherGroup: WeatherGroupResponse? = WeatherGroupResponse(list: [])
-        
-        for id in cityIdSet {
-            if let backup = self.priv.backupCityWeatherGroup.first(where: { $0.id == id }) {
-                exceptionCityIds.append(id)
-                weatherGroup?.list.append(backup)
-            }
-        }
-        
-        let cityIds = Array(cityIdSet.subtracting(exceptionCityIds))
-        
-        print("after(\(cityIds.count)): \(cityIds)")
-        
-        let group = DispatchGroup()
-        
-        group.enter()
         NetworkManager.shared.request(
             WeatherRequest.group(cityIds),
             WeatherGroupResponse.self
         ) { data in
-            weatherGroup?.list.append(contentsOf: data.list)
-            group.leave()
+            self.priv.weatherGroup.value = data
         } failureHandler: {
             // error 처리
-            weatherGroup = nil // weak self 처리
-            group.leave()
-        }
-        
-        group.notify(queue: .main) {
-            let sorted = weatherGroup?.list.sorted { $0.id < $1.id } ?? []
-            weatherGroup?.list = sorted
-            self.priv.weatherGroup.value = weatherGroup
+            self.priv.weatherGroup.value = nil // weak self 처리
         }
     }
     
